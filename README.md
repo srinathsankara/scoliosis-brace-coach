@@ -37,6 +37,7 @@ on your local machine with no cloud dependency.
 - [Who is this for?](#who-is-this-for)
 - [Quick Start](#quick-start)
 - [How to Use](#how-to-use)
+- [Example Results](#example-results)
 - [Features](#features)
 - [How It Works](#how-it-works)
 - [For Developers](#for-developers)
@@ -216,6 +217,38 @@ Go to **Clinician Dashboard** and click **Export PDF** to download a clinical-gr
 - Recommendations
 
 Bring this PDF to your next orthopedic appointment.
+
+---
+
+## Example Results
+
+See [EXAMPLES.md](EXAMPLES.md) for detailed analysis of real photos with interpretation guidelines.
+
+### Quick Examples
+
+| Image | Metrics | Status |
+|-------|---------|--------|
+| **Moderate Asymmetry** | Shoulder: 18px, Trunk: 75°, Rotation: 50° | ⚠️ Needs clinical evaluation |
+| **Mild Asymmetry** | Shoulder: 4px, Trunk: 15°, Rotation: 16° | ⚠️ Monitor closely |
+| **Good Posture** | Shoulder: 2px, Trunk: 1°, Rotation: 1° | ✅ All metrics within normal range |
+
+### How Results Are Displayed
+
+After uploading a photo, the results page shows:
+
+1. **Session Info** — Mode (standing/walking, with/without brace) and age group
+2. **Metric Cards** — Each metric with its value and status badge
+3. **Risk Score** — Composite rotation risk score (0-100)
+4. **Brace Detection** — Whether a brace was detected in the image
+
+### Status Badges
+
+| Badge | Meaning |
+|-------|---------|
+| ✅ **Good** | Within normal range for the age group |
+| ⚠️ **Needs Improvement** | Outside normal range — monitor closely |
+
+For detailed interpretation, see [EXAMPLES.md](EXAMPLES.md).
 
 ---
 
