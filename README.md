@@ -222,33 +222,47 @@ Bring this PDF to your next orthopedic appointment.
 
 ## Example Results
 
-See [EXAMPLES.md](EXAMPLES.md) for detailed analysis of real photos with interpretation guidelines.
+### How the Tool Works
 
-### Quick Examples
+The tool uses MediaPipe pose detection to find 33 body landmarks, then calculates asymmetry metrics:
 
-| Image | Metrics | Status |
-|-------|---------|--------|
-| **Moderate Asymmetry** | Shoulder: 18px, Trunk: 75°, Rotation: 50° | ⚠️ Needs clinical evaluation |
-| **Mild Asymmetry** | Shoulder: 4px, Trunk: 15°, Rotation: 16° | ⚠️ Monitor closely |
-| **Good Posture** | Shoulder: 2px, Trunk: 1°, Rotation: 1° | ✅ All metrics within normal range |
+```
+Upload Photo -> Detect Landmarks -> Calculate Metrics -> Compare Thresholds -> Report
+```
 
-### How Results Are Displayed
+### Key Measurements
 
-After uploading a photo, the results page shows:
+**Shoulder Asymmetry** - Height difference between left and right shoulders:
+```
+Left Shoulder *=================* Right Shoulder
+              | delta_h (pixels) |
+```
 
-1. **Session Info** — Mode (standing/walking, with/without brace) and age group
-2. **Metric Cards** — Each metric with its value and status badge
-3. **Risk Score** — Composite rotation risk score (0-100)
-4. **Brace Detection** — Whether a brace was detected in the image
+**Trunk Lean Angle** - How much the torso tilts:
+```
+     * Mid-Shoulder
+    /|
+   / | delta_x
+  / theta
+ *----* Mid-Hip
+theta = arctan(delta_x / delta_y)
+```
 
-### Status Badges
+**Trunk Rotation** - Vertebral rotation from shoulder vs hip angles:
+```
+Rotation = |shoulder_angle - hip_angle|
+```
 
-| Badge | Meaning |
-|-------|---------|
-| ✅ **Good** | Within normal range for the age group |
-| ⚠️ **Needs Improvement** | Outside normal range — monitor closely |
+### Example Output
 
-For detailed interpretation, see [EXAMPLES.md](EXAMPLES.md).
+| Metric | Good Posture | Needs Improvement |
+|--------|--------------|-------------------|
+| Shoulder Asymmetry | 2px | 18px |
+| Trunk Lean Angle | 1 degree | 75 degrees |
+| Trunk Rotation | 1 degree | 50 degrees |
+| Risk Score | 0/100 | 30/100 |
+
+For detailed interpretation, see [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md).
 
 ---
 
