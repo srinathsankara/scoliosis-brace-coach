@@ -51,8 +51,36 @@ Rotation = |theta_s - theta_h|
 - Rotation: 1 degree [GOOD]
 - Risk Score: 0/100
 
-### Needs Improvement
-- Shoulder Asymmetry: 18px [NEEDS_IMPROVEMENT]
-- Trunk Lean: 75 degrees [NEEDS_IMPROVEMENT]
-- Rotation: 50 degrees [NEEDS_IMPROVEMENT]
-- Risk Score: 30/100
+### Real Analysis: Person with Posture Issues
+
+**Image:** person_posture.jpg (Pexels free stock photo)
+**Mode:** Standing (Without Brace)
+**Age Group:** Adult
+
+| Metric | Value | Status | What It Means |
+|--------|-------|--------|---------------|
+| Shoulder Asymmetry | 107 px | NEEDS_IMPROVEMENT | Shoulders are significantly uneven |
+| Hip Asymmetry | 34 px | - | Hips show some tilt |
+| Trunk Lean Angle | 47.95 degrees | NEEDS_IMPROVEMENT | Significant lateral lean |
+| Head Tilt | 56.5 px | - | Head is tilted to one side |
+| Spine Deviation | 148.0 px | - | Spine shifted from center |
+| Trunk Rotation | 47.61 degrees | NEEDS_IMPROVEMENT | Vertebral rotation present |
+| Rotation Risk Score | 60/100 | NEEDS_IMPROVEMENT | Moderate-high risk |
+
+**Interpretation:** This analysis shows significant asymmetry across multiple metrics. The combination of shoulder imbalance (107px), trunk lean (47.95 degrees), and rotation (47.61 degrees) suggests a 3D spinal deformity that warrants clinical evaluation.
+
+### How to Read the Results
+
+1. **Status Badges:**
+   - GOOD = Within normal range for age group
+   - NEEDS_IMPROVEMENT = Outside normal range - monitor closely
+
+2. **Risk Score (0-100):**
+   - 0-29: Low risk
+   - 30-59: Moderate risk
+   - 60-100: High risk - seek clinical evaluation
+
+3. **Key Patterns to Watch:**
+   - Shoulder asymmetry > Trunk lean > Rotation (combined indicates scoliosis)
+   - High rotation risk score with multiple "needs_improvement" metrics
+   - Consistent asymmetry across multiple sessions

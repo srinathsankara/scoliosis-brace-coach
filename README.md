@@ -253,14 +253,36 @@ theta = arctan(delta_x / delta_y)
 Rotation = |shoulder_angle - hip_angle|
 ```
 
-### Example Output
+### Real Analysis Example
 
-| Metric | Good Posture | Needs Improvement |
-|--------|--------------|-------------------|
-| Shoulder Asymmetry | 2px | 18px |
-| Trunk Lean Angle | 1 degree | 75 degrees |
-| Trunk Rotation | 1 degree | 50 degrees |
-| Risk Score | 0/100 | 30/100 |
+**Image:** Person standing (Pexels free stock photo)
+**Mode:** Standing (Without Brace)
+**Age Group:** Adult
+
+| Metric | Value | Status | What It Means |
+|--------|-------|--------|---------------|
+| Shoulder Asymmetry | 107 px | NEEDS_IMPROVEMENT | Shoulders significantly uneven |
+| Trunk Lean Angle | 47.95 degrees | NEEDS_IMPROVEMENT | Significant lateral lean |
+| Trunk Rotation | 47.61 degrees | NEEDS_IMPROVEMENT | Vertebral rotation present |
+| Rotation Risk Score | 60/100 | NEEDS_IMPROVEMENT | Moderate-high risk |
+
+**Interpretation:** This analysis shows significant asymmetry across multiple metrics. The combination of shoulder imbalance (107px), trunk lean (47.95 degrees), and rotation (47.61 degrees) suggests a 3D spinal deformity that warrants clinical evaluation.
+
+### How to Read Results
+
+1. **Status Badges:**
+   - GOOD = Within normal range for age group
+   - NEEDS_IMPROVEMENT = Outside normal range - monitor closely
+
+2. **Risk Score (0-100):**
+   - 0-29: Low risk
+   - 30-59: Moderate risk
+   - 60-100: High risk - seek clinical evaluation
+
+3. **Key Patterns to Watch:**
+   - Shoulder asymmetry > Trunk lean > Rotation (combined indicates scoliosis)
+   - High rotation risk score with multiple "needs_improvement" metrics
+   - Consistent asymmetry across multiple sessions
 
 For detailed interpretation, see [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md).
 
