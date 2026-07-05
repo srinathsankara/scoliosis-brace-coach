@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoliosis Brace Coach</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
+    <div class="bg-amber-50 border border-amber-300 p-4 rounded-lg w-full max-w-lg mb-6">
+        <div class="flex items-start">
+            <svg class="w-5 h-5 text-amber-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <div>
+                <p class="text-sm font-bold text-amber-800">Medical Disclaimer</p>
+                <p class="text-xs text-amber-700 mt-1">This tool is for <strong>educational and monitoring purposes only</strong>. It is <strong>not</strong> a medical device and does <strong>not</strong> replace professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for clinical decisions. The author assumes no responsibility for medical decisions made based on this tool's output. Use entirely at your own risk.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-lg mb-8">
+        <h1 class="text-3xl font-bold mb-1 text-center text-blue-800">Scoliosis Brace Coach</h1>
+        <p class="text-center text-gray-400 text-xs mb-1">Created by <strong class="text-gray-600">Srinath Sankara</strong></p>
+        <p class="text-center text-gray-500 mb-6">AI-powered posture and brace effectiveness monitoring</p>
+        
+        <form id="uploadForm">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Photo or Video</label>
+                <input type="file" name="media" accept="image/*,video/*" class="w-full border p-2 rounded" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Age Group</label>
+                <select name="age_group" class="w-full border p-2 rounded">
+                    <option value="under12">Under 12</option>
+                    <option value="under15" selected>Under 15</option>
+                    <option value="under18">Under 18</option>
+                    <option value="adult">Adult</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Session Type</label>
+                <select name="mode" class="w-full border p-2 rounded">
+                    <option value="standing_no_brace">Standing (Without Brace)</option>
+                    <option value="standing_with_brace">Standing (With Brace)</option>
+                    <option value="walking_no_brace">Walking (Without Brace)</option>
+                    <option value="walking_with_brace">Walking (With Brace)</option>
+                    <option value="exercise">Schroth Exercise</option>
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded hover:bg-blue-700 transition">
+                Analyze Session
+            </button>
+        </form>
+        
+        <div id="status" class="mt-6 text-center hidden">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+            <p class="text-gray-600">Processing your session...</p>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded shadow-md w-full max-w-lg">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">Filming Tips for Best Results</h2>
+        <ul class="list-disc pl-5 space-y-2 text-gray-700 text-sm">
+            <li>Stand or walk <strong>directly facing away</strong> from the camera (posterior view).</li>
+            <li>Ensure <strong>good lighting</strong> and a plain background.</li>
+            <li>Keep the <strong>entire body</strong> in the frame from head to ankles.</li>
+            <li>For walking, move <strong>slowly and steadily</strong> away from the camera.</li>
+            <li>Wear <strong>fitted clothing</strong> so body contours are visible.</li>
+        </ul>
+        <div class="mt-4 pt-4 border-t border-gray-200 flex space-x-4">
+            <a href="/history" class="text-blue-600 hover:underline text-sm font-medium">View History</a>
+            <a href="/compare" class="text-blue-600 hover:underline text-sm font-medium">Compare Sessions</a>
+            <a href="/dashboard" class="text-blue-600 hover:underline text-sm font-medium">Clinician Dashboard</a>
+            <a href="/trends" class="text-blue-600 hover:underline text-sm font-medium">Trends</a>
+            <a href="/sensors" class="text-blue-600 hover:underline text-sm font-medium">Pair Sensors</a>
+            <a href="/about" class="text-blue-600 hover:underline text-sm font-medium">About AIS</a>
+        </div>
+    </div>
+
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 p-6 rounded-lg shadow-md w-full max-w-lg mt-8">
+        <h2 class="text-xl font-bold mb-3 text-blue-800">Why This Tool Matters</h2>
+        <p class="text-gray-700 text-sm leading-relaxed mb-4">
+            Adolescent Idiopathic Scoliosis (AIS) affects <strong>2-3% of adolescents</strong>. When detected early, the right combination of bracing and physical therapy can <strong>prevent curve progression and avoid surgery entirely</strong>.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+            <div class="bg-white p-3 rounded border border-blue-100 text-center">
+                <p class="text-2xl font-bold text-blue-600">72%</p>
+                <p class="text-xs text-gray-600">Surgery avoided with proper bracing (BrAIST study)</p>
+            </div>
+            <div class="bg-white p-3 rounded border border-green-100 text-center">
+                <p class="text-2xl font-bold text-green-600">5hr/day</p>
+                <p class="text-xs text-gray-600">Minimum brace wear shown effective in clinical trials</p>
+            </div>
+            <div class="bg-white p-3 rounded border border-purple-100 text-center">
+                <p class="text-2xl font-bold text-purple-600">87%</p>
+                <p class="text-xs text-gray-600">Schroth therapy success rate with consistent practice</p>
+            </div>
+        </div>
+        <p class="text-gray-700 text-sm leading-relaxed mb-4">
+            This platform gives you <strong>objective data</strong> to show your orthotist and physical therapist exactly how your brace is performing and how your posture is improving over time. <strong>Consistent monitoring = better outcomes = fewer surgeries.</strong>
+        </p>
+        <a href="/about" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm transition">
+            Learn How Bracing & PT Prevent Surgery
+        </a>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const statusDiv = document.getElementById('status');
+            statusDiv.classList.remove('hidden');
+            
+            const formData = new FormData(e.target);
+            const res = await fetch('/upload', { method: 'POST', body: formData });
+            const data = await res.json();
+            
+            if (data.job_id) {
+                const interval = setInterval(async () => {
+                    const statusRes = await fetch(`/status/${data.job_id}`);
+                    const statusData = await statusRes.json();
+                    if (statusData.status === 'done') {
+                        clearInterval(interval);
+                        window.location.href = `/results/${data.job_id}`;
+                    } else if (statusData.status === 'error') {
+                        clearInterval(interval);
+                        statusDiv.classList.add('hidden');
+                        alert('Analysis Error: ' + statusData.message);
+                    }
+                }, 1000);
+            } else {
+                statusDiv.classList.add('hidden');
+                alert('Upload failed: ' + (data.error || 'Unknown error'));
+            }
+        };
+    </script>
+</body>
+</html>

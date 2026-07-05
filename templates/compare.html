@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compare Sessions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/static/js/compare.js" defer></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
+        <h1 class="text-2xl font-bold mb-4">Compare Brace Effectiveness</h1>
+        
+        <div class="grid grid-cols-2 gap-8 mb-8">
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Session 1 (e.g., Without Brace)</label>
+                <select id="session1" class="w-full border p-2 rounded">
+                    {% for s in sessions %}
+                    <option value="{{ s[0] }}">{{ s[1] }} - {{ s[2].replace('_', ' ') }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Session 2 (e.g., With Brace)</label>
+                <select id="session2" class="w-full border p-2 rounded">
+                    {% for s in sessions %}
+                    <option value="{{ s[0] }}">{{ s[1] }} - {{ s[2].replace('_', ' ') }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div id="comparison-results" class="hidden">
+            <h2 class="text-xl font-bold mb-4 border-b pb-2">Metric Comparison</h2>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-2 border">Metric</th>
+                        <th class="p-2 border">Session 1</th>
+                        <th class="p-2 border">Session 2</th>
+                        <th class="p-2 border">Difference</th>
+                        <th class="p-2 border">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="comparison-table-body">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-8">
+            <a href="/" class="text-blue-500 hover:underline">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

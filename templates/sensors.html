@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensor Integration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+        <h1 class="text-2xl font-bold mb-4">Brace Sensors & Pressure Monitoring</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="border p-4 rounded bg-gray-50">
+                <h2 class="text-lg font-bold text-gray-800 mb-3">BLE Device Scan</h2>
+                <div class="mb-4">
+                    <button onclick="location.reload()" class="bg-blue-500 text-white px-4 py-2 rounded">Scan for Devices</button>
+                </div>
+                <ul class="space-y-2">
+                    {% for device in devices %}
+                    <li class="border p-3 rounded flex justify-between items-center">
+                        <span>{{ device.name or 'Unknown Device' }} ({{ device.address }})</span>
+                        <button class="bg-green-500 text-white px-3 py-1 rounded text-sm">Pair</button>
+                    </li>
+                    {% else %}
+                    <li class="text-gray-500">No devices found. Make sure your sensor is in pairing mode.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="border p-4 rounded bg-gray-50">
+                <h2 class="text-lg font-bold text-gray-800 mb-3">Pressure Points</h2>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center p-2 bg-white rounded border">
+                        <span class="text-sm text-gray-700">Upper Support</span>
+                        <span class="font-mono text-sm">40-60 kPa</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 bg-white rounded border">
+                        <span class="text-sm text-gray-700">Middle (Apex)</span>
+                        <span class="font-mono text-sm">50-70 kPa</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 bg-white rounded border">
+                        <span class="text-sm text-gray-700">Lower Support</span>
+                        <span class="font-mono text-sm">35-55 kPa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border p-4 rounded bg-blue-50 mb-6">
+            <h2 class="text-lg font-bold text-gray-800 mb-3">Compliance Tracking</h2>
+            <p class="text-sm text-gray-600 mb-4">Track brace wear-time automatically using temperature sensors. The system detects when the brace is worn based on skin temperature changes.</p>
+            <div class="flex space-x-4">
+                <button onclick="startCompliance()" class="bg-green-500 text-white px-4 py-2 rounded text-sm">Start Monitoring</button>
+                <button onclick="endCompliance()" class="bg-red-500 text-white px-4 py-2 rounded text-sm">Stop Monitoring</button>
+            </div>
+            <div id="compliance-status" class="mt-3 text-sm"></div>
+        </div>
+
+        <div class="border p-4 rounded bg-gray-50 mb-6">
+            <h2 class="text-lg font-bold text-gray-800 mb-3">Pressure Evaluation</h2>
+            <p class="text-sm text-gray-600 mb-3">Enter pressure readings from your smart brace to evaluate correction force distribution.</p>
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Upper (kPa)</label>
+                    <input type="number" id="upper-pressure" class="w-full border p-2 rounded text-sm" placeholder="50">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Middle (kPa)</label>
+                    <input type="number" id="middle-pressure" class="w-full border p-2 rounded text-sm" placeholder="60">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Lower (kPa)</label>
+                    <input type="number" id="lower-pressure" class="w-full border p-2 rounded text-sm" placeholder="45">
+                </div>
+            </div>
+            <button onclick="evaluatePressure()" class="bg-blue-500 text-white px-4 py-2 rounded text-sm">Evaluate Pressure</button>
+            <div id="pressure-result" class="mt-3"></div>
+        </div>
+
+        <div class="mt-8">
+            <a href="/" class="text-blue-500 hover:underline">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        let currentSessionId = null;
+
+        async function startCompliance() {
+            const res = await fetch('/api/compliance/start', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({session_id: 'session_' + Date.now()})
+            });
+            const data = await res.json();
+            currentSessionId = data.session_id;
+            document.getElementById('compliance-status').innerHTML =
+                '<span class="text-green-600 font-medium">Monitoring started: ' + currentSessionId + '</span>';
+        }
+
+        async function endCompliance() {
+            if (!currentSessionId) {
+                alert('No active session. Start monitoring first.');
+                return;
+            }
+            const res = await fetch('/api/compliance/end', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({session_id: currentSessionId})
+            });
+            const data = await res.json();
+            document.getElementById('compliance-status').innerHTML =
+                `<span class="text-blue-600">Session ended. Total wear time: ${data.total_wear_hours} hours (${data.compliance_percentage}% compliance)</span>`;
+            currentSessionId = null;
+        }
+
+        async function evaluatePressure() {
+            const payload = {
+                upper_support: parseFloat(document.getElementById('upper-pressure').value) || 0,
+                middle_pressure: parseFloat(document.getElementById('middle-pressure').value) || 0,
+                lower_support: parseFloat(document.getElementById('lower-pressure').value) || 0,
+                skin_temp: 34.5
+            };
+
+            const res = await fetch('/api/pressure/evaluate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+
+            let html = `<div class="p-3 rounded mt-2 ${data.score >= 80 ? 'bg-green-100' : data.score >= 50 ? 'bg-yellow-100' : 'bg-red-100'}">
+                <p class="font-medium">Overall Score: ${data.score}/100</p>
+                <p class="text-sm mt-1">${data.summary}</p>
+            </div>`;
+
+            for (const [name, point] of Object.entries(data.points || {})) {
+                const statusColor = point.status === 'optimal' ? 'green' : 'red';
+                html += `<div class="flex justify-between items-center mt-2 p-2 bg-white rounded border">
+                    <span class="text-sm">${name.replace(/_/g, ' ')}</span>
+                    <span class="text-sm font-mono">${point.value} ${point.unit}</span>
+                    <span class="text-xs px-2 py-0.5 rounded bg-${statusColor}-100 text-${statusColor}-700">${point.status}</span>
+                </div>`;
+            }
+
+            document.getElementById('pressure-result').innerHTML = html;
+        }
+    </script>
+</body>
+</html>

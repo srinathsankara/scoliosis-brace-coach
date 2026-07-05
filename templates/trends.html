@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longitudinal Trends</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">Longitudinal Trends</h1>
+                <p class="text-gray-500 mt-1">Track posture metrics over time and detect progression</p>
+                <p class="text-gray-400 text-xs mt-1">Created by <strong>Srinath Sankara</strong></p>
+            </div>
+            <div class="flex space-x-3">
+                <a href="/api/pdf-report" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Export PDF
+                </a>
+                <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">New Analysis</a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Trunk Lean Angle</h2>
+                <canvas id="trunkAngleChart" height="200"></canvas>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Shoulder Asymmetry</h2>
+                <canvas id="shoulderChart" height="200"></canvas>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Trunk Rotation</h2>
+                <canvas id="rotationChart" height="200"></canvas>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Spine Deviation</h2>
+                <canvas id="spineChart" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Progression Alerts</h2>
+            <div id="alerts-container" class="space-y-3">
+                <p class="text-gray-500 text-center py-4">Loading alerts...</p>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Session Timeline</h2>
+            <div id="timeline-container" class="space-y-3">
+                <p class="text-gray-500 text-center py-4">Loading sessions...</p>
+            </div>
+        </div>
+
+        <div class="mt-8 flex space-x-4">
+            <a href="/dashboard" class="text-blue-600 hover:underline">Clinician Dashboard</a>
+            <a href="/history" class="text-blue-600 hover:underline">Session History</a>
+            <a href="/compare" class="text-blue-600 hover:underline">Compare Sessions</a>
+        </div>
+    </div>
+
+    <script>
+        async function loadTrends() {
+            try {
+                const res = await fetch('/api/trends');
+                const data = await res.json();
+
+                if (data.status === 'analyzed') {
+                    renderCharts(data.trends);
+                    renderAlerts(data.alerts);
+                } else {
+                    document.getElementById('alerts-container').innerHTML =
+                        '<p class="text-gray-500 text-center py-4">Insufficient data for trend analysis. Need at least 2 sessions.</p>';
+                }
+            } catch (err) {
+                console.error('Failed to load trends:', err);
+            }
+
+            try {
+                const reportRes = await fetch('/api/progression-report');
+                const report = await reportRes.json();
+                renderTimeline(report);
+            } catch (err) {
+                console.error('Failed to load report:', err);
+            }
+        }
+
+        function renderCharts(trends) {
+            const metrics = ['trunk_lean_angle', 'shoulder_asymmetry', 'trunk_rotation_angle', 'spine_deviation'];
+            const canvasIds = ['trunkAngleChart', 'shoulderChart', 'rotationChart', 'spineChart'];
+
+            metrics.forEach((metric, idx) => {
+                const trend = trends[metric];
+                if (!trend) return;
+
+                const canvas = document.getElementById(canvasIds[idx]);
+                if (!canvas) return;
+
+                const direction = trend.direction;
+                const borderColor = direction === 'increasing' ? '#ef4444' : direction === 'decreasing' ? '#22c55e' : '#6b7280';
+
+                new Chart(canvas, {
+                    type: 'line',
+                    data: {
+                        labels: ['Baseline', 'Current'],
+                        datasets: [{
+                            label: metric.replace(/_/g, ' '),
+                            data: [trend.baseline_value, trend.current_value],
+                            borderColor: borderColor,
+                            backgroundColor: borderColor + '20',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: '°' }
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        function renderAlerts(alerts) {
+            const container = document.getElementById('alerts-container');
+            if (!alerts || alerts.length === 0) {
+                container.innerHTML = '<div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r"><p class="text-green-700 font-medium">No progression alerts. All metrics are within acceptable range.</p></div>';
+                return;
+            }
+
+            container.innerHTML = alerts.map(alert => {
+                const color = alert.level === 'critical' ? 'red' : 'yellow';
+                const icon = alert.level === 'critical'
+                    ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>'
+                    : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>';
+
+                return `<div class="bg-${color}-50 border-l-4 border-${color}-500 p-4 rounded-r">
+                    <div class="flex">
+                        <svg class="h-5 w-5 text-${color}-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">${icon}</svg>
+                        <div>
+                            <p class="font-medium text-${color}-800">${alert.metric.replace(/_/g, ' ').toUpperCase()}</p>
+                            <p class="text-sm text-${color}-700 mt-1">${alert.message}</p>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderTimeline(report) {
+            const container = document.getElementById('timeline-container');
+            if (!report || report.total_sessions === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-center py-4">No sessions recorded yet.</p>';
+                return;
+            }
+
+            const summary = report.summary;
+            const items = [];
+
+            if (summary.latest_trunk_angle !== null) {
+                items.push(`<div class="flex items-center p-3 bg-gray-50 rounded">
+                    <div class="w-3 h-3 rounded-full bg-blue-500 mr-3"></div>
+                    <div>
+                        <p class="font-medium text-gray-800">Latest Trunk Angle</p>
+                        <p class="text-sm text-gray-600">${summary.latest_trunk_angle}° (avg: ${summary.avg_trunk_angle}°)</p>
+                    </div>
+                </div>`);
+            }
+
+            if (summary.latest_shoulder_asym !== null) {
+                items.push(`<div class="flex items-center p-3 bg-gray-50 rounded">
+                    <div class="w-3 h-3 rounded-full bg-green-500 mr-3"></div>
+                    <div>
+                        <p class="font-medium text-gray-800">Latest Shoulder Asymmetry</p>
+                        <p class="text-sm text-gray-600">${summary.latest_shoulder_asym}px (avg: ${summary.avg_shoulder_asym}px)</p>
+                    </div>
+                </div>`);
+            }
+
+            items.push(`<div class="flex items-center p-3 bg-gray-50 rounded">
+                <div class="w-3 h-3 rounded-full bg-purple-500 mr-3"></div>
+                <div>
+                    <p class="font-medium text-gray-800">Total Sessions</p>
+                    <p class="text-sm text-gray-600">${report.total_sessions} sessions recorded</p>
+                </div>
+            </div>`);
+
+            container.innerHTML = items.join('');
+        }
+
+        loadTrends();
+    </script>
+</body>
+</html>

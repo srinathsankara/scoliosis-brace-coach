@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analysis Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+        <h1 class="text-2xl font-bold mb-4">Analysis Results for {{ job_id }}</h1>
+
+        {% if result.status == 'error' %}
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r mb-6">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800">Analysis Error</h3>
+                    <p class="text-sm text-red-700 mt-1">{{ result.message }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-blue-50 border border-blue-200 p-4 rounded mb-6">
+            <h3 class="font-bold text-blue-800 text-sm mb-2">Troubleshooting Tips</h3>
+            <ul class="list-disc pl-5 space-y-1 text-sm text-blue-700">
+                <li>Ensure the photo shows a <strong>single person</strong> from the back (posterior view).</li>
+                <li>Keep the <strong>entire body</strong> in frame from head to ankles.</li>
+                <li>Use <strong>good lighting</strong> with a plain background.</li>
+                <li>Wear <strong>fitted clothing</strong> so body contours are visible.</li>
+                <li>For videos, ensure the person is clearly visible throughout.</li>
+            </ul>
+        </div>
+
+        {% else %}
+
+        <div class="flex items-center space-x-4 mb-6">
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium capitalize">{{ result.mode.replace('_', ' ') }}</span>
+            {% if result.brace_detected %}
+            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Brace Detected</span>
+            {% else %}
+            <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium">No Brace Detected</span>
+            {% endif %}
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            {% for key, value in result.metrics.items() %}
+            <div class="border p-4 rounded bg-gray-50">
+                <h3 class="font-bold text-gray-700 text-sm uppercase tracking-wide">{{ key.replace('_', ' ') }}</h3>
+                <p class="text-2xl font-mono mt-1">
+                    {{ value }}{% if 'angle' in key or 'rotation' in key %}°{% elif 'status' in key %}{% else %}px{% endif %}
+                </p>
+                {% if 'status' in key %}
+                <span class="inline-block mt-1 px-2 py-0.5 rounded text-xs font-medium
+                    {% if value == 'good' %}bg-green-100 text-green-800
+                    {% elif value == 'needs_improvement' %}bg-yellow-100 text-yellow-800
+                    {% else %}bg-gray-100 text-gray-800{% endif %}">
+                    {{ value.replace('_', ' ').title() }}
+                </span>
+                {% endif %}
+                {% if 'risk_score' in key %}
+                <div class="mt-2">
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="h-2 rounded-full {% if value < 30 %}bg-green-500{% elif value < 60 %}bg-yellow-500{% else %}bg-red-500{% endif %}" style="width: {{ value }}%"></div>
+                    </div>
+                    <span class="text-xs text-gray-500 mt-1">{% if value < 30 %}Low Risk{% elif value < 60 %}Moderate Risk{% else %}High Risk{% endif %}</span>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        {% endif %}
+
+        <div class="mt-8 flex space-x-4">
+            <a href="/" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">New Analysis</a>
+            <a href="/history" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">View History</a>
+        </div>
+
+        <div class="mt-6 bg-amber-50 border border-amber-200 p-3 rounded text-xs text-amber-700">
+            <strong>Disclaimer:</strong> These metrics are estimates from computer vision analysis and are for educational/monitoring purposes only. They are not medical measurements and should not be used to make clinical decisions. Always consult a qualified healthcare provider. Created by <strong>Srinath Sankara</strong>.
+        </div>
+    </div>
+</body>
+</html>

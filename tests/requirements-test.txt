@@ -1,0 +1,17 @@
+# Testing dependencies
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.11.0
+httpx>=0.24.0
+Pillow>=10.0.0
+
+# E2E Testing
+playwright>=1.40.0
+
+# Load Testing (install k6 separately: https://k6.io/docs/get-started/installation/)
+# k6 is a standalone binary, not a pip package
+
+# Security Scanning
+bandit>=1.7.5
+safety>=2.3.0

@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Databases (auto-created at runtime)
+*.db
+
+# Uploaded files (user data)
+uploads/
+
+# Auto-downloaded model files
+pose_landmarker.task
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Reports (generated)
+*.pdf
+
+# Environment variables
+.env
+.env.local
