@@ -1,0 +1,34 @@
+title: "[Discussion] "
+labels: ["discussion"]
+body:
+  - type: textarea
+    id: topic
+    attributes:
+      label: Topic
+      description: What would you like to discuss?
+      placeholder: "I'd like to discuss..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What type of discussion is this?
+      options:
+        - General question
+        - Feature idea
+        - Clinical use case
+        - Technical architecture
+        - Contributing
+        - Show and tell (share your setup)
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Any additional context, links, or references.
+    validations:
+      required: false

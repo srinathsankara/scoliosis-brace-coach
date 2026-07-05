@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Medical Disclaimer
+    url: https://github.com/srinathsankara/scoliosis-brace-coach#-medical-disclaimer
+    about: This application is not a medical device. Always consult a qualified healthcare provider for medical decisions.
+  - name: Discussions
+    url: https://github.com/srinathsankara/scoliosis-brace-coach/discussions
+    about: Ask questions and discuss ideas with the community

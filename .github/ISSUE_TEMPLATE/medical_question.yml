@@ -1,0 +1,43 @@
+name: Medical/Clinical Question
+description: Questions about scoliosis treatment, bracing, or clinical use
+title: "[Clinical]: "
+labels: ["clinical", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Important:** This application is for educational and monitoring purposes only. It is not a medical device and does not provide medical diagnosis or treatment recommendations.
+
+        For medical questions, we encourage you to consult a qualified healthcare provider. However, if you have a question about how the application works or how to interpret its output in a clinical context, we're happy to help clarify.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What is your clinical or medical question?
+      placeholder: "How does the trunk rotation metric relate to..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: context
+    attributes:
+      label: Clinical Context
+      description: What is the context of your question?
+      options:
+        - Scoliosis treatment monitoring
+        - Brace fitting / effectiveness
+        - Exercise / physical therapy
+        - Pre-surgical assessment
+        - General understanding of metrics
+        - Research / academic
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any additional context, patient age group, brace type, etc.
+    validations:
+      required: false
