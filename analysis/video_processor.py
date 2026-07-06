@@ -2,6 +2,7 @@ from .pose_detector import detector
 from .brace_detector import detect_brace
 from .posture_rules import analyze_posture
 from .rotation_rules import analyze_rotation
+from .back_asymmetry import analyze_back_asymmetry
 from .gait_rules import analyze_gait
 from .exercise_rules import analyze_exercise
 import cv2
@@ -49,6 +50,8 @@ def process_media(path, mode, age_group='under15'):
         metrics = analyze_posture(landmarks, image.shape, age_group)
         rotation = analyze_rotation(landmarks, image.shape, age_group)
         metrics.update(rotation)
+        back_asym = analyze_back_asymmetry(image, landmarks)
+        metrics.update(back_asym)
         analysis['metrics'] = metrics
     elif 'walking' in mode:
         all_landmarks = [detector.detect(f) for f in frames if detector.detect(f)]

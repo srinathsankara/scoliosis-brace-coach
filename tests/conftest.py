@@ -40,7 +40,7 @@ def isolate_workdir(tmp_path, monkeypatch):
 # ---------------------------------------------------------------------------
 
 @pytest.fixture
-def app():
+def app(tmp_path):
     """
     Create a fresh Flask application instance for each test.
     The app is configured for testing (no debug, temp DB paths).
@@ -216,9 +216,9 @@ def asymmetric_landmarks():
 
     landmarks = [MockLandmark(0.5, 0.5) for _ in range(33)]
 
-    # Shoulders: left higher (smaller y) than right
-    landmarks[11] = MockLandmark(0.40, 0.22)
-    landmarks[12] = MockLandmark(0.60, 0.34)
+    # Shoulders: left closer to midline than right (asymmetric rib hump)
+    landmarks[11] = MockLandmark(0.38, 0.22)
+    landmarks[12] = MockLandmark(0.64, 0.34)
     landmarks[13] = MockLandmark(0.33, 0.38)
     landmarks[14] = MockLandmark(0.67, 0.44)
     landmarks[15] = MockLandmark(0.28, 0.52)

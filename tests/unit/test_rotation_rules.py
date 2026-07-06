@@ -122,13 +122,13 @@ class TestRotationEdgeCases:
         class LM:
             def __init__(self, x, y): self.x = x; self.y = y; self.z = 0.0
         landmarks = [LM(0.5, 0.5) for _ in range(33)]
-        # Extreme asymmetry
-        landmarks[11] = LM(0.1, 0.0)   # Far left, top
-        landmarks[12] = LM(0.9, 1.0)   # Far right, bottom
+        # Extreme asymmetry: shoulders visibly rotated from hip midline
+        landmarks[11] = LM(0.10, 0.0)   # Left shoulder very far left
+        landmarks[12] = LM(0.85, 1.0)   # Right shoulder less far right
         landmarks[13] = LM(0.05, 0.1)
         landmarks[14] = LM(0.95, 0.9)
-        landmarks[23] = LM(0.44, 0.55)
-        landmarks[24] = LM(0.56, 0.55)
+        landmarks[23] = LM(0.45, 0.55)
+        landmarks[24] = LM(0.55, 0.55)
         landmarks[25] = LM(0.44, 0.72)
         landmarks[26] = LM(0.56, 0.72)
 

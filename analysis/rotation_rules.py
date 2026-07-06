@@ -26,14 +26,18 @@ def analyze_rotation(landmarks, image_shape, age_group='under15'):
     l_knee = detector.get_landmark_coords(landmarks, image_shape, 25)
     r_knee = detector.get_landmark_coords(landmarks, image_shape, 26)
 
+    # Rib hump estimation: asymmetry in shoulder-to-spine distance
+    # In scoliosis, trunk rotation makes one shoulder blade more prominent
+    # Measured as difference in lateral offset from the spine (shoulder-line midpoint)
     mid_sh = np.array([(l_sh[0] + r_sh[0]) / 2, (l_sh[1] + r_sh[1]) / 2])
     mid_hip = np.array([(l_hip[0] + r_hip[0]) / 2, (l_hip[1] + r_hip[1]) / 2])
 
-    # Rib hump estimation: shoulder width asymmetry from posterior view
-    # When trunk rotates, one shoulder blade appears more prominent
-    shoulder_width_l = np.sqrt((l_sh[0] - mid_sh[0])**2 + (l_sh[1] - mid_sh[1])**2)
-    shoulder_width_r = np.sqrt((r_sh[0] - mid_sh[0])**2 + (r_sh[1] - mid_sh[1])**2)
-    rib_hump_proxy = abs(shoulder_width_l - shoulder_width_r)
+    # Rib hump estimate: lateral protrusion of each shoulder from the spine line
+    # Spine line = vertical line through mid-shoulder projected downward
+    # In scoliosis, trunk rotation makes one shoulder extend further laterally
+    l_shoulder_lateral = abs(l_sh[0] - mid_hip[0])
+    r_shoulder_lateral = abs(r_sh[0] - mid_hip[0])
+    rib_hump_proxy = abs(l_shoulder_lateral - r_shoulder_lateral)
 
     # Axillary fold difference: elbow height asymmetry indicates trunk rotation
     axillary_diff = abs(l_elbow[1] - r_elbow[1])

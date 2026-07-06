@@ -14,8 +14,16 @@ PROGRESSION_THRESHOLDS = {
     'spine_deviation': {'significant': 8.0, 'alert': 5.0}
 }
 
-def get_session_history(session_id=None, mode=None, limit=100):
-    with sqlite3.connect(TREND_DB) as con:
+def get_session_history(session_id=None, mode=None, limit=100, db_path=None):
+    db = db_path or TREND_DB
+    with sqlite3.connect(db) as con:
+        # Check if table exists
+        table_exists = con.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='sessions'"
+        ).fetchone()
+        if not table_exists:
+            return []
+
         if session_id:
             rows = con.execute(
                 'SELECT job_id, created_at, mode, result_json FROM sessions WHERE job_id=?',
@@ -139,12 +147,12 @@ def compute_trends(sessions):
         }
     }
 
-def generate_progression_report(patient_id=None, mode=None):
+def generate_progression_report(patient_id=None, mode=None, db_path=None):
     """
     Generate a comprehensive progression report for a patient.
     Includes trends, alerts, and recommendations.
     """
-    sessions = get_session_history(mode=mode)
+    sessions = get_session_history(mode=mode, db_path=db_path)
     if not sessions:
         return {'status': 'no_data', 'message': 'No sessions found'}
 

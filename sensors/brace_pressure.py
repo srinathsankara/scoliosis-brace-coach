@@ -43,6 +43,9 @@ def parse_pressure_data(sensor_payload):
     Expected format: JSON with pressure readings at correction points.
     Compatible with ScolioSense, Boston Sensor, and generic BLE braces.
     """
+    if sensor_payload is None:
+        return None
+
     if isinstance(sensor_payload, str):
         try:
             sensor_payload = json.loads(sensor_payload)
@@ -53,14 +56,17 @@ def parse_pressure_data(sensor_payload):
     if not all(k in sensor_payload for k in required_keys):
         return None
 
-    readings = {
-        'upper_support': float(sensor_payload['upper_support']),
-        'middle_pressure': float(sensor_payload['middle_pressure']),
-        'lower_support': float(sensor_payload['lower_support']),
-        'skin_temp': float(sensor_payload.get('skin_temp', 0)),
-        'timestamp': sensor_payload.get('timestamp', datetime.now().isoformat())
-    }
-    return readings
+    try:
+        readings = {
+            'upper_support': float(sensor_payload['upper_support']),
+            'middle_pressure': float(sensor_payload['middle_pressure']),
+            'lower_support': float(sensor_payload['lower_support']),
+            'skin_temp': float(sensor_payload.get('skin_temp', 0)),
+            'timestamp': sensor_payload.get('timestamp', datetime.now().isoformat())
+        }
+        return readings
+    except (ValueError, TypeError):
+        return None
 
 def evaluate_pressure(readings):
     """

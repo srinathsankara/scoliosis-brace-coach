@@ -43,13 +43,15 @@ class PoseDetector:
         result = self.landmarker.detect(mp_image)
         return result.pose_landmarks[0] if result.pose_landmarks else None
 
-    def calculate_angle(self, a, b, c):
+    @staticmethod
+    def calculate_angle(a, b, c):
         a, b, c = np.array(a), np.array(b), np.array(c)
         radians = np.arctan2(c[1]-b[1], c[0]-b[0]) - np.arctan2(a[1]-b[1], a[0]-b[0])
         angle = np.abs(radians * 180.0 / np.pi)
         return angle if angle <= 180.0 else 360.0 - angle
 
-    def get_landmark_coords(self, landmarks, image_shape, landmark_id):
+    @staticmethod
+    def get_landmark_coords(landmarks, image_shape, landmark_id):
         h, w = image_shape[:2]
         lm = landmarks[landmark_id]
         return [int(lm.x * w), int(lm.y * h)]

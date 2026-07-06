@@ -108,9 +108,10 @@ class TestComputeTrends:
 
     def test_stable_trend_for_identical_values(self):
         """Identical values across sessions should show 'stable' direction."""
+        # Sessions in DESC order (newest first) matching get_session_history
         sessions = [
             {'metrics': {'trunk_lean_angle': 5.0}, 'created_at': f'2025-01-{i:02d}', 'job_id': f'j{i}', 'mode': 'standing_no_brace'}
-            for i in range(1, 6)
+            for i in range(5, 0, -1)
         ]
         result = compute_trends(sessions)
         assert result['status'] == 'analyzed'
@@ -118,8 +119,9 @@ class TestComputeTrends:
 
     def test_increasing_trend(self):
         """Rising values should show 'increasing' direction."""
+        # Sessions in DESC order (newest first) matching get_session_history
         sessions = [
-            {'metrics': {'trunk_lean_angle': i * 2.0}, 'created_at': f'2025-01-{i:02d}', 'job_id': f'j{i}', 'mode': 'standing_no_brace'}
+            {'metrics': {'trunk_lean_angle': (6 - i) * 2.0}, 'created_at': f'2025-01-{6-i:02d}', 'job_id': f'j{i}', 'mode': 'standing_no_brace'}
             for i in range(1, 6)
         ]
         result = compute_trends(sessions)
@@ -128,8 +130,9 @@ class TestComputeTrends:
 
     def test_decreasing_trend(self):
         """Falling values should show 'decreasing' direction."""
+        # Sessions in DESC order (newest first) matching get_session_history
         sessions = [
-            {'metrics': {'shoulder_asymmetry': 20 - i * 2.0}, 'created_at': f'2025-01-{i:02d}', 'job_id': f'j{i}', 'mode': 'standing_no_brace'}
+            {'metrics': {'shoulder_asymmetry': 10 + (i - 1) * 2.0}, 'created_at': f'2025-01-{6-i:02d}', 'job_id': f'j{i}', 'mode': 'standing_no_brace'}
             for i in range(1, 6)
         ]
         result = compute_trends(sessions)
@@ -137,9 +140,10 @@ class TestComputeTrends:
 
     def test_critical_alert_on_large_change(self):
         """Change exceeding critical threshold should generate critical alert."""
+        # Sessions in DESC order (newest first) matching get_session_history
         sessions = [
-            {'metrics': {'trunk_lean_angle': 1.0}, 'created_at': '2025-01-01', 'job_id': 'j1', 'mode': 'standing_no_brace'},
             {'metrics': {'trunk_lean_angle': 8.0}, 'created_at': '2025-01-05', 'job_id': 'j2', 'mode': 'standing_no_brace'},
+            {'metrics': {'trunk_lean_angle': 1.0}, 'created_at': '2025-01-01', 'job_id': 'j1', 'mode': 'standing_no_brace'},
         ]
         result = compute_trends(sessions)
         critical_alerts = [a for a in result['alerts'] if a['level'] == 'critical']
@@ -147,9 +151,10 @@ class TestComputeTrends:
 
     def test_warning_alert_on_moderate_change(self):
         """Change exceeding warning threshold should generate warning alert."""
+        # Sessions in DESC order (newest first) matching get_session_history
         sessions = [
-            {'metrics': {'trunk_lean_angle': 2.0}, 'created_at': '2025-01-01', 'job_id': 'j1', 'mode': 'standing_no_brace'},
             {'metrics': {'trunk_lean_angle': 5.5}, 'created_at': '2025-01-05', 'job_id': 'j2', 'mode': 'standing_no_brace'},
+            {'metrics': {'trunk_lean_angle': 2.0}, 'created_at': '2025-01-01', 'job_id': 'j1', 'mode': 'standing_no_brace'},
         ]
         result = compute_trends(sessions)
         warning_alerts = [a for a in result['alerts'] if a['level'] == 'warning']

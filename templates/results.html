@@ -44,6 +44,28 @@
             {% endif %}
         </div>
 
+        {% if result.metrics.back_asymmetry_risk is defined %}
+        <div class="mb-6 p-4 rounded border-2 {% if result.metrics.back_asymmetry_risk > 50 %}bg-red-50 border-red-300{% elif result.metrics.back_asymmetry_risk > 20 %}bg-yellow-50 border-yellow-300{% else %}bg-green-50 border-green-300{% endif %}">
+            <h3 class="font-bold text-lg mb-2">Spinal Curvature Assessment</h3>
+            <div class="flex items-center space-x-4">
+                <div class="text-3xl font-bold {% if result.metrics.back_asymmetry_risk > 50 %}text-red-600{% elif result.metrics.back_asymmetry_risk > 20 %}text-yellow-600{% else %}text-green-600{% endif %}">
+                    {{ result.metrics.back_asymmetry_risk }}%
+                </div>
+                <div>
+                    <div class="font-medium">
+                        {% if result.metrics.back_asymmetry_risk > 50 %}High Asymmetry Detected
+                        {% elif result.metrics.back_asymmetry_risk > 20 %}Moderate Asymmetry Detected
+                        {% else %}Low Asymmetry Detected{% endif %}
+                    </div>
+                    <div class="text-sm text-gray-600">Risk score based on pixel-level back analysis</div>
+                </div>
+            </div>
+            {% if result.metrics.back_asymmetry_risk > 20 %}
+            <p class="mt-3 text-sm">This analysis detected asymmetry patterns consistent with spinal curvature. This tool provides estimates only - please consult a qualified healthcare provider for diagnosis and treatment decisions.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             {% for key, value in result.metrics.items() %}
             <div class="border p-4 rounded bg-gray-50">

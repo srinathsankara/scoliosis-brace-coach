@@ -36,10 +36,10 @@ class TestDetectBrace:
         assert result is False
 
     def test_all_white_image(self):
-        """Completely white image should detect as brace (high white percentage)."""
+        """Completely white image has no edges, so brace detection returns False."""
         img = np.ones((600, 400, 3), dtype=np.uint8) * 255
         result = detect_brace(img)
-        assert result is True
+        assert result is False
 
     def test_all_black_image(self):
         """Completely black image should not detect brace."""

@@ -37,7 +37,7 @@ def get_all_patients():
     return patients
 
 def get_patient_summary(patient_id='default_patient'):
-    sessions = get_session_history()
+    sessions = get_session_history(db_path=DB_PATH)
     if not sessions:
         return None
 
@@ -77,7 +77,7 @@ def get_patient_summary(patient_id='default_patient'):
     }
 
 def generate_pdf_report(patient_id='default_patient'):
-    report_data = generate_progression_report(patient_id)
+    report_data = generate_progression_report(patient_id, db_path=DB_PATH)
     summary = get_patient_summary(patient_id)
 
     buffer = BytesIO()
