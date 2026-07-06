@@ -51,23 +51,41 @@ Rotation = |theta_s - theta_h|
 - Rotation: 1 degree [GOOD]
 - Risk Score: 0/100
 
-### Real Analysis: Person with Posture Issues
+### Real Analysis: Person with Scoliosis
 
-**Image:** person_posture.jpg (Pexels free stock photo)
+**Image:** scoliosis_back2.jpg (Openverse CC-licensed photo)
 **Mode:** Standing (Without Brace)
-**Age Group:** Adult
+**Age Group:** Under 15
 
 | Metric | Value | Status | What It Means |
 |--------|-------|--------|---------------|
-| Shoulder Asymmetry | 107 px | NEEDS_IMPROVEMENT | Shoulders are significantly uneven |
-| Hip Asymmetry | 34 px | - | Hips show some tilt |
-| Trunk Lean Angle | 47.95 degrees | NEEDS_IMPROVEMENT | Significant lateral lean |
-| Head Tilt | 56.5 px | - | Head is tilted to one side |
-| Spine Deviation | 148.0 px | - | Spine shifted from center |
-| Trunk Rotation | 47.61 degrees | NEEDS_IMPROVEMENT | Vertebral rotation present |
-| Rotation Risk Score | 60/100 | NEEDS_IMPROVEMENT | Moderate-high risk |
+| Shoulder Asymmetry | 19 px | NEEDS_IMPROVEMENT | Shoulders are uneven |
+| Hip Asymmetry | 9 px | - | Hips show some tilt |
+| Trunk Lean Angle | 14.04 degrees | NEEDS_IMPROVEMENT | Lateral lean present |
+| Head Tilt | 13.0 px | - | Head is tilted to one side |
+| Spine Deviation | 35.0 px | - | Spine shifted from center |
+| Trunk Rotation | 7.27 degrees | NEEDS_IMPROVEMENT | Vertebral rotation present |
+| Rotation Risk Score | 57.3/100 | NEEDS_IMPROVEMENT | Moderate-high risk |
 
-**Interpretation:** This analysis shows significant asymmetry across multiple metrics. The combination of shoulder imbalance (107px), trunk lean (47.95 degrees), and rotation (47.61 degrees) suggests a 3D spinal deformity that warrants clinical evaluation.
+**Interpretation:** This analysis shows moderate asymmetry. The combination of shoulder imbalance (19px), trunk lean (14.04 degrees), and rotation (7.27 degrees) with a risk score of 57.3 suggests a spinal deformity that warrants clinical evaluation.
+
+### Real Analysis: Severe Scoliosis
+
+**Image:** scoliosis_back3.jpg (Openverse CC-licensed photo)
+**Mode:** Standing (Without Brace)
+**Age Group:** Under 15
+
+| Metric | Value | Status | What It Means |
+|--------|-------|--------|---------------|
+| Shoulder Asymmetry | 27 px | NEEDS_IMPROVEMENT | Shoulders significantly uneven |
+| Hip Asymmetry | 27 px | - | Hips show significant tilt |
+| Trunk Lean Angle | 6.98 degrees | - | Mild lateral lean |
+| Head Tilt | 59.5 px | - | Head significantly tilted |
+| Spine Deviation | 75.5 px | - | Significant spine shift |
+| Trunk Rotation | 2.04 degrees | - | Mild vertebral rotation |
+| Rotation Risk Score | 30/100 | GOOD | Low-moderate risk |
+
+**Interpretation:** This analysis shows significant shoulder and hip asymmetry with notable head tilt and spine deviation. Despite the lower rotation score, the combined asymmetry patterns suggest scoliosis that requires clinical assessment.
 
 ### How to Read the Results
 

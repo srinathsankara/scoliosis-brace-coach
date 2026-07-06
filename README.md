@@ -253,20 +253,34 @@ theta = arctan(delta_x / delta_y)
 Rotation = |shoulder_angle - hip_angle|
 ```
 
-### Real Analysis Example
+### Real Analysis Examples
 
-**Image:** Person standing (Pexels free stock photo)
+**Image:** scoliosis_back2.jpg (Openverse CC-licensed photo)
 **Mode:** Standing (Without Brace)
-**Age Group:** Adult
+**Age Group:** Under 15
 
 | Metric | Value | Status | What It Means |
 |--------|-------|--------|---------------|
-| Shoulder Asymmetry | 107 px | NEEDS_IMPROVEMENT | Shoulders significantly uneven |
-| Trunk Lean Angle | 47.95 degrees | NEEDS_IMPROVEMENT | Significant lateral lean |
-| Trunk Rotation | 47.61 degrees | NEEDS_IMPROVEMENT | Vertebral rotation present |
-| Rotation Risk Score | 60/100 | NEEDS_IMPROVEMENT | Moderate-high risk |
+| Shoulder Asymmetry | 19 px | NEEDS_IMPROVEMENT | Shoulders uneven |
+| Trunk Lean Angle | 14.04 degrees | NEEDS_IMPROVEMENT | Lateral lean present |
+| Trunk Rotation | 7.27 degrees | NEEDS_IMPROVEMENT | Vertebral rotation present |
+| Rotation Risk Score | 57.3/100 | NEEDS_IMPROVEMENT | Moderate-high risk |
 
-**Interpretation:** This analysis shows significant asymmetry across multiple metrics. The combination of shoulder imbalance (107px), trunk lean (47.95 degrees), and rotation (47.61 degrees) suggests a 3D spinal deformity that warrants clinical evaluation.
+**Interpretation:** Moderate asymmetry with shoulder imbalance, trunk lean, and rotation. Risk score of 57.3 suggests clinical evaluation needed.
+
+**Image:** scoliosis_back3.jpg (Openverse CC-licensed photo)
+**Mode:** Standing (Without Brace)
+**Age Group:** Under 15
+
+| Metric | Value | Status | What It Means |
+|--------|-------|--------|---------------|
+| Shoulder Asymmetry | 27 px | NEEDS_IMPROVEMENT | Shoulders significantly uneven |
+| Trunk Lean Angle | 6.98 degrees | - | Mild lateral lean |
+| Head Tilt | 59.5 px | - | Head significantly tilted |
+| Spine Deviation | 75.5 px | - | Significant spine shift |
+| Rotation Risk Score | 30/100 | GOOD | Low-moderate risk |
+
+**Interpretation:** Significant shoulder and hip asymmetry with notable head tilt and spine deviation. Combined patterns suggest scoliosis requiring clinical assessment.
 
 ### How to Read Results
 
