@@ -40,3 +40,11 @@ desktop.ini
 # Environment variables
 .env
 .env.local
+
+# iOS / Xcode
+ScoliosisCoach-iOS/Pods/
+ScoliosisCoach-iOS/.build/
+ScoliosisCoach-iOS/*.xcworkspace
+ScoliosisCoach-iOS/DerivedData/
+ScoliosisCoach-iOS/build/
+ScoliosisCoach-iOS/*.xcuserdata
