@@ -17,13 +17,18 @@ struct AnalysisView: View {
         "exercises_no_brace", "exercises_with_brace"
     ]
 
-    let ageGroups = ["under15", "over15"]
+    // FIX #3: Align age groups with actual threshold keys in PostureRules/RotationRules
+    let ageGroups: [(key: String, label: String)] = [
+        ("under12", "Under 12"),
+        ("under15", "13–15"),
+        ("under18", "16–18"),
+        ("adult", "Adult"),
+    ]
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 16) {
-                    // Mode picker
                     VStack(alignment: .leading) {
                         Text("Analysis Mode")
                             .font(.headline)
@@ -37,20 +42,18 @@ struct AnalysisView: View {
                     }
                     .padding(.horizontal)
 
-                    // Age group
                     VStack(alignment: .leading) {
                         Text("Age Group")
                             .font(.headline)
                         Picker("Age", selection: $selectedAgeGroup) {
-                            ForEach(ageGroups, id: \.self) { age in
-                                Text(age == "under15" ? "Under 15" : "15 and Over").tag(age)
+                            ForEach(ageGroups, id: \.key) { group in
+                                Text(group.label).tag(group.key)
                             }
                         }
-                        .pickerStyle(SegmentedPickerStyle())
+                        .pickerStyle(MenuPickerStyle())
                     }
                     .padding(.horizontal)
 
-                    // Photo area
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(Color.secondary, lineWidth: 2)
@@ -88,7 +91,6 @@ struct AnalysisView: View {
                         Button("Cancel", role: .cancel) {}
                     }
 
-                    // Analyze button
                     Button(action: runAnalysis) {
                         if isAnalyzing {
                             ProgressView()

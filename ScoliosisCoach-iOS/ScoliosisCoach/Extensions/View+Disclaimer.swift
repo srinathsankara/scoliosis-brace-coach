@@ -5,10 +5,10 @@ struct DisclaimerModifier: ViewModifier {
         content
             .overlay(alignment: .bottom) {
                 Text("MEDICAL DISCLAIMER: For educational purposes only. Not a medical device. Consult a healthcare provider.")
-                    .font(.system(size: 6))
+                    .font(.system(size: 9))
                     .foregroundColor(.red)
-                    .padding(.horizontal, 4)
-                    .padding(.vertical, 2)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
                     .background(Color(.systemBackground).opacity(0.9))
             }
     }

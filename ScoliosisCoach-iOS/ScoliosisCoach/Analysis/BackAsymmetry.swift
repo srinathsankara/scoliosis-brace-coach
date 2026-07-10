@@ -1,6 +1,5 @@
 import UIKit
 import CoreImage
-import Accelerate
 
 struct BackAsymmetryResult {
     let brightnessAsymmetry: CGFloat
@@ -12,6 +11,9 @@ struct BackAsymmetryResult {
     let backAsymmetryStatus: String
 }
 
+/// Maximum image dimension for pixel-level analysis (performance)
+private let analysisMaxDim: CGFloat = 256
+
 func analyzeBackAsymmetry(
     image: UIImage,
     landmarks: [[String: CGFloat]]
@@ -19,81 +21,98 @@ func analyzeBackAsymmetry(
     guard landmarks.count >= 25,
           let cgImage = image.cgImage else { return nil }
 
-    let detector = PoseDetector.shared
-    let lSh = detector.landmark(landmarks, at: 11) ?? .zero
-    let rSh = detector.landmark(landmarks, at: 12) ?? .zero
-    let lHip = detector.landmark(landmarks, at: 23) ?? .zero
-    let rHip = detector.landmark(landmarks, at: 24) ?? .zero
+    // Downscale for pixel-level performance (256px max dimension)
+    let scale = min(analysisMaxDim / image.size.width, analysisMaxDim / image.size.height, 1.0)
+    let scaledSize = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+
+    UIGraphicsBeginImageContextWithOptions(scaledSize, true, 1.0)
+    image.draw(in: CGRect(origin: .zero, size: scaledSize))
+    guard let scaledCG = UIGraphicsGetImageFromCurrentImageContext()?.cgImage else {
+        UIGraphicsEndImageContext()
+        return nil
+    }
+    UIGraphicsEndImageContext()
+
+    // Scale landmarks to downscaled coordinates
+    func lm(_ idx: Int) -> CGPoint {
+        guard idx < landmarks.count else { return .zero }
+        return CGPoint(x: (landmarks[idx]["x"] ?? 0) * scale,
+                       y: (landmarks[idx]["y"] ?? 0) * scale)
+    }
+
+    let lSh = lm(11)
+    let rSh = lm(12)
+    let lHip = lm(23)
+    let rHip = lm(24)
 
     let midShX = (lSh.x + rSh.x) / 2
     let midHipX = (lHip.x + rHip.x) / 2
-    let width = image.size.width
-    let height = image.size.height
+    let width = scaledSize.width
+    let height = scaledSize.height
 
-    // Define torso region
+    // Torso crop region — using Y coordinates for vertical bounds (FIX #1)
+    let shoulderY = (lSh.y + rSh.y) / 2
+    let hipY = (lHip.y + rHip.y) / 2
     let xMin = max(0, min(lSh.x, lHip.x) - 10)
     let xMax = min(width, max(rSh.x, rHip.x) + 10)
-    let yMin = max(0, midShX - 20)
-    let yMax = min(height, midHipX + 20)
+    let yMin = max(0, shoulderY - 10)
+    let yMax = min(height, hipY + 20)
 
     guard xMax > xMin, yMax > yMin else { return nil }
 
-    // Crop to torso region
     let cropRect = CGRect(x: xMin, y: yMin, width: xMax - xMin, height: yMax - yMin)
-    guard let cropped = cgImage.cropping(to: cropRect) else { return nil }
+    guard let cropped = scaledCG.cropping(to: cropRect) else { return nil }
 
     let ciImage = CIImage(cgImage: cropped)
     let context = CIContext(options: [.outputPremultiplied: true])
 
-    // Convert to grayscale for analysis
     guard let grayFilter = CIFilter(name: "CIPhotoEffectMono") else { return nil }
     grayFilter.setValue(ciImage, forKey: kCIInputImageKey)
     guard let grayOutput = grayFilter.outputImage,
           let grayCG = context.createCGImage(grayOutput, from: grayOutput.extent) else { return nil }
 
-    let gray = UIImage(cgImage: grayCG)
-    let grayWidth = Int(gray.size.width)
-    let grayHeight = Int(gray.size.height)
+    let grayWidth = grayCG.width
+    let grayHeight = grayCG.height
     let midX = Int((midShX - xMin))
     let midHipXLocal = Int((midHipX - xMin))
 
-    guard midX > 0, midX < grayWidth, let pixelData = gray.cgImage?.pixelData() else { return nil }
+    guard midX > 0, midX < grayWidth, let pixelData = grayCG.pixelData() else { return nil }
 
-    // --- Brightness Asymmetry ---
+    // Brightness asymmetry
     let leftBrightness = averageBrightness(pixelData: pixelData, width: grayWidth, height: grayHeight,
                                            xStart: 0, xEnd: midX)
     let rightBrightness = averageBrightness(pixelData: pixelData, width: grayWidth, height: grayHeight,
                                             xStart: midX, xEnd: grayWidth)
     let brightnessAsymmetry = abs(leftBrightness - rightBrightness)
 
-    // --- Edge Asymmetry ---
+    // Edge asymmetry
     guard let edgeFilter = CIFilter(name: "CIEdges") else { return nil }
     edgeFilter.setValue(ciImage, forKey: kCIInputImageKey)
     edgeFilter.setValue(5.0, forKey: kCIInputIntensityKey)
     guard let edgeOutput = edgeFilter.outputImage,
           let edgeCG = context.createCGImage(edgeOutput, from: edgeOutput.extent) else { return nil }
 
-    let edgePixelData = UIImage(cgImage: edgeCG).cgImage?.pixelData() ?? pixelData
+    let edgePixelData = edgeCG.pixelData() ?? pixelData
     let leftEdges = averageBrightness(pixelData: edgePixelData, width: grayWidth, height: grayHeight,
                                       xStart: 0, xEnd: midX)
     let rightEdges = averageBrightness(pixelData: edgePixelData, width: grayWidth, height: grayHeight,
                                        xStart: midX, xEnd: grayWidth)
     let edgeAsymmetry = abs(leftEdges - rightEdges)
 
-    // --- Texture Asymmetry (Laplacian variance proxy) ---
-    let leftTexture = textureVariance(pixelData: pixelData, width: grayWidth, height: grayHeight,
-                                      xStart: 0, xEnd: midX)
-    let rightTexture = textureVariance(pixelData: pixelData, width: grayWidth, height: grayHeight,
-                                       xStart: midX, xEnd: grayWidth)
+    // Texture asymmetry (Laplacian std dev — FIX #2: self-normalized)
+    let leftTexture = textureStdDev(pixelData: pixelData, width: grayWidth, height: grayHeight,
+                                    xStart: 0, xEnd: midX)
+    let rightTexture = textureStdDev(pixelData: pixelData, width: grayWidth, height: grayHeight,
+                                     xStart: midX, xEnd: grayWidth)
     let textureAsymmetry = abs(leftTexture - rightTexture)
 
-    // --- Midline Deviation ---
+    // Midline deviation
     let midlineDeviation = measureMidlineDeviation(pixelData: pixelData, width: grayWidth, height: grayHeight, midX: midHipXLocal)
 
-    // --- Spine Curve Score ---
+    // Spine curve score
     let spineCurveScore = measureSpineCurve(pixelData: pixelData, width: grayWidth, height: grayHeight, midX: midX)
 
-    // --- Combined Risk Score ---
+    // Combined risk score
     var riskScore: CGFloat = 0
     if brightnessAsymmetry > 5 { riskScore += min(25, brightnessAsymmetry * 1.5) }
     if midlineDeviation > 1 { riskScore += min(25, midlineDeviation * 5) }
@@ -138,29 +157,28 @@ private func averageBrightness(pixelData: Data, width: Int, height: Int, xStart:
     return count > 0 ? CGFloat(total) / CGFloat(count) : 0
 }
 
-private func textureVariance(pixelData: Data, width: Int, height: Int, xStart: Int, xEnd: Int) -> CGFloat {
-    let mean = averageBrightness(pixelData: pixelData, width: width, height: height, xStart: xStart, xEnd: xEnd)
+/// Laplacian standard deviation (FIX #2: variance of laplacian around its own mean)
+private func textureStdDev(pixelData: Data, width: Int, height: Int, xStart: Int, xEnd: Int) -> CGFloat {
     let bytesPerRow = width * 4
-    var variance: CGFloat = 0
-    var count: CGFloat = 0
+    var laplacians: [CGFloat] = []
 
     for y in 1..<(height - 1) {
         for x in max(1, xStart)..<min(xEnd - 1, width - 1) {
             let offset = y * bytesPerRow + x * 4
             guard offset + 3 < pixelData.count else { continue }
             let val = CGFloat(pixelData[offset])
-            // Simple Laplacian approximation
             let top = CGFloat(pixelData[(y - 1) * bytesPerRow + x * 4])
             let bottom = CGFloat(pixelData[(y + 1) * bytesPerRow + x * 4])
             let left = CGFloat(pixelData[y * bytesPerRow + (x - 1) * 4])
             let right = CGFloat(pixelData[y * bytesPerRow + (x + 1) * 4])
-            let laplacian = abs(4 * val - top - bottom - left - right)
-            variance += (laplacian - mean) * (laplacian - mean)
-            count += 1
+            laplacians.append(abs(4 * val - top - bottom - left - right))
         }
     }
 
-    return count > 0 ? sqrt(variance / count) : 0
+    guard laplacians.count > 1 else { return 0 }
+    let mean = laplacians.reduce(0, +) / CGFloat(laplacians.count)
+    let variance = laplacians.map { ($0 - mean) * ($0 - mean) }.reduce(0, +) / CGFloat(laplacians.count)
+    return sqrt(variance)
 }
 
 private func measureMidlineDeviation(pixelData: Data, width: Int, height: Int, midX: Int) -> CGFloat {

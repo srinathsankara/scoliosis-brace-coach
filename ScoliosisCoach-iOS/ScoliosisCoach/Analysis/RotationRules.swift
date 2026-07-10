@@ -4,6 +4,8 @@ struct RotationThresholds {
     let ribHumpPx: CGFloat
     let axillaryDiffPx: CGFloat
     let rotationAngleDeg: CGFloat
+
+    static let `default` = RotationThresholds(ribHumpPx: 7, axillaryDiffPx: 5, rotationAngleDeg: 4)
 }
 
 let rotationAgeThresholds: [String: RotationThresholds] = [
@@ -70,7 +72,7 @@ func analyzeRotation(
     // Pelvic obliquity
     let pelvicObliquity = abs(lHip.y - rHip.y)
 
-    let thresholds = rotationAgeThresholds[ageGroup] ?? rotationAgeThresholds["under15"]!
+    let thresholds = rotationAgeThresholds[ageGroup] ?? .default
 
     let ribHumpStatus = ribHumpProxy < thresholds.ribHumpPx ? "good" : "needs_improvement"
     let rotationStatus = rotationAngle < thresholds.rotationAngleDeg ? "good" : "needs_improvement"

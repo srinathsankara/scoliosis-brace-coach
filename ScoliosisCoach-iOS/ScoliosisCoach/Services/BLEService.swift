@@ -6,7 +6,6 @@ actor BLEService: NSObject {
 
     private var centralManager: CBCentralManager?
     private var discoveredPeripherals: [CBPeripheral] = []
-    private var isScanning = false
     private var scanContinuation: AsyncStream<[BLEDevice]>.Continuation?
 
     struct BLEDevice: Identifiable {
@@ -24,18 +23,21 @@ actor BLEService: NSObject {
 
     func stopScan() {
         centralManager?.stopScan()
-        isScanning = false
         scanContinuation?.finish()
     }
 }
 
 extension BLEService: CBCentralManagerDelegate {
+    // FIX #6: remove @MainActor dispatch — actor already guarantees serial access
     nonisolated func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        Task { @MainActor in
-            if central.state == .poweredOn {
-                self.centralManager?.scanForPeripherals(withServices: nil, options: nil)
-                self.isScanning = true
-            }
+        Task {
+            await self.handleStateChange(central)
+        }
+    }
+
+    private func handleStateChange(_ central: CBCentralManager) {
+        if central.state == .poweredOn {
+            centralManager?.scanForPeripherals(withServices: nil, options: nil)
         }
     }
 
@@ -43,18 +45,22 @@ extension BLEService: CBCentralManagerDelegate {
                                      didDiscover peripheral: CBPeripheral,
                                      advertisementData: [String: Any],
                                      rssi RSSI: NSNumber) {
-        Task { @MainActor in
-            let name = peripheral.name ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? "Unknown"
-            let device = BLEDevice(id: peripheral.identifier.uuidString, name: name, rssi: RSSI.intValue)
-            if !self.discoveredPeripherals.contains(where: { $0.identifier == peripheral.identifier }) {
-                self.discoveredPeripherals.append(peripheral)
-            }
-            let devices = self.discoveredPeripherals.map {
-                BLEDevice(id: $0.identifier.uuidString,
-                          name: $0.name ?? "Unknown",
-                          rssi: 0)
-            }
-            self.scanContinuation?.yield(devices)
+        Task {
+            await self.handleDiscovered(peripheral, advertisementData: advertisementData, rssi: RSSI)
         }
+    }
+
+    private func handleDiscovered(_ peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
+        let name = peripheral.name ?? (advertisementData[CBAdvertisementDataLocalNameKey] as? String) ?? "Unknown"
+        if !discoveredPeripherals.contains(where: { $0.identifier == peripheral.identifier }) {
+            discoveredPeripherals.append(peripheral)
+        }
+        let devices = discoveredPeripherals.map { p in
+            let rssiValue = p.identifier == peripheral.identifier ? RSSI.intValue : 0
+            return BLEDevice(id: p.identifier.uuidString,
+                            name: p.name ?? "Unknown",
+                            rssi: rssiValue)
+        }
+        scanContinuation?.yield(devices)
     }
 }

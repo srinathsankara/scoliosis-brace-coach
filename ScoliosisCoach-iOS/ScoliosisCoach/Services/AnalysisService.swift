@@ -10,26 +10,23 @@ actor AnalysisService {
         ageGroup: String = "under15"
     ) async -> AnalysisResult {
         do {
-            // Step 1: Pose detection
             let landmarks = try await PoseDetector.shared.detect(image)
 
-            guard let landmarks = landmarks, landmarks.count >= 33 else {
+            // FIX #12: consistent landmark count (PostureRules needs >= 29)
+            guard let landmarks = landmarks, landmarks.count >= 29 else {
                 return AnalysisResult(
                     status: "error",
                     message: "No person detected. Ensure the photo shows a full body from the back."
                 )
             }
 
-            // Step 2: Brace detection
             let braceDetected = detectBrace(in: image)
 
             let imageSize = image.size
 
-            // Step 3: Run all analyses
             var metrics = MetricsResult.empty()
 
             if mode.contains("standing") {
-                // Posture analysis
                 if let posture = analyzePosture(landmarks: landmarks, imageSize: imageSize, ageGroup: ageGroup) {
                     metrics.shoulderAsymmetry = posture.shoulderAsymmetry
                     metrics.hipAsymmetry = posture.hipAsymmetry
@@ -41,7 +38,6 @@ actor AnalysisService {
                     metrics.trunkStatus = posture.trunkStatus
                 }
 
-                // Rotation analysis
                 if let rotation = analyzeRotation(landmarks: landmarks, imageSize: imageSize, ageGroup: ageGroup) {
                     metrics.ribHumpProxy = rotation.ribHumpProxy
                     metrics.ribHumpStatus = rotation.ribHumpStatus
@@ -55,7 +51,6 @@ actor AnalysisService {
                     metrics.rotationRiskScore = rotation.rotationRiskScore
                 }
 
-                // Back asymmetry analysis
                 if let backAsym = analyzeBackAsymmetry(image: image, landmarks: landmarks) {
                     metrics.brightnessAsymmetry = backAsym.brightnessAsymmetry
                     metrics.midlineDeviation = backAsym.midlineDeviation
@@ -66,13 +61,11 @@ actor AnalysisService {
                     metrics.backAsymmetryStatus = backAsym.backAsymmetryStatus
                 }
             } else if mode.contains("walking") {
-                // Gait analysis
                 if let gait = analyzeGait(landmarksFrames: [landmarks], imageSize: imageSize) {
                     metrics.trunkLeanAngle = gait.gaitSymmetryScore
                 }
             }
 
-            // Step 4: Save to database
             let session = Session(
                 id: UUID().uuidString,
                 createdAt: Date(),

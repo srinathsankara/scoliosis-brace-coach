@@ -24,7 +24,7 @@ actor ReportService {
         let format = UIGraphicsPDFRendererFormat()
         format.documentInfo = pdfMetaData as [String: Any]
 
-        let pageWidth: CGFloat = 595.2  // A4
+        let pageWidth: CGFloat = 595.2
         let pageHeight: CGFloat = 841.8
         let renderer = UIGraphicsPDFRenderer(
             bounds: CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight),
@@ -77,19 +77,26 @@ actor ReportService {
                     .draw(at: CGPoint(x: 40, y: yPos), withAttributes: [.font: bodyFont])
                 yPos += 16
 
-                let metricsLines = [
-                    "Trunk Lean Angle: \(metrics.trunkLeanAngle)° (\(metrics.trunkStatus))",
-                    "Shoulder Asymmetry: \(metrics.shoulderAsymmetry) px (\(metrics.shoulderStatus))",
-                    "Rotation Risk: \(metrics.rotationRiskScore)/100 (\(metrics.rotationStatus))",
-                    "Back Asymmetry Risk: \(metrics.backAsymmetryRisk)% (\(metrics.backAsymmetryStatus))"
+                // FIX #16: right-align values for readability
+                let labelX: CGFloat = 50
+                let valueX: CGFloat = 280
+
+                let rowData: [(label: String, value: String)] = [
+                    ("Trunk Lean Angle", "\(metrics.trunkLeanAngle)° (\(metrics.trunkStatus))"),
+                    ("Shoulder Asymmetry", "\(metrics.shoulderAsymmetry) px (\(metrics.shoulderStatus))"),
+                    ("Rotation Risk", "\(metrics.rotationRiskScore)/100 (\(metrics.rotationStatus))"),
+                    ("Back Asymmetry Risk", "\(metrics.backAsymmetryRisk)% (\(metrics.backAsymmetryStatus))"),
                 ]
-                for line in metricsLines {
-                    line.draw(at: CGPoint(x: 50, y: yPos), withAttributes: [.font: smallFont])
+
+                for row in rowData {
+                    row.label.draw(at: CGPoint(x: labelX, y: yPos),
+                                   withAttributes: [.font: smallFont])
+                    row.value.draw(at: CGPoint(x: valueX, y: yPos),
+                                   withAttributes: [.font: smallFont, .foregroundColor: UIColor.darkGray])
                     yPos += 14
                 }
                 yPos += 8
 
-                // Page break if needed
                 if yPos > pageHeight - 60 {
                     context.beginPage()
                     yPos = 40

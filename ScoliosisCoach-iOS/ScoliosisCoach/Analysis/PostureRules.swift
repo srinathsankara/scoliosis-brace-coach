@@ -3,6 +3,8 @@ import Foundation
 struct PostureThresholds {
     let shoulderDiffPx: CGFloat
     let trunkAngleDeg: CGFloat
+
+    static let `default` = PostureThresholds(shoulderDiffPx: 15, trunkAngleDeg: 3.0)
 }
 
 let ageThresholds: [String: PostureThresholds] = [
@@ -32,7 +34,6 @@ func analyzePosture(
 
     let detector = PoseDetector.shared
 
-    // Key landmarks (MediaPipe indices)
     let lSh = detector.landmark(landmarks, at: 11) ?? .zero
     let rSh = detector.landmark(landmarks, at: 12) ?? .zero
     let lHip = detector.landmark(landmarks, at: 23) ?? .zero
@@ -41,13 +42,11 @@ func analyzePosture(
     let lWrist = detector.landmark(landmarks, at: 15) ?? .zero
     let rWrist = detector.landmark(landmarks, at: 16) ?? .zero
 
-    // Midpoints
     let midShX = (lSh.x + rSh.x) / 2
     let midShY = (lSh.y + rSh.y) / 2
     let midHipX = (lHip.x + rHip.x) / 2
     let midHipY = (lHip.y + rHip.y) / 2
 
-    // Metrics
     let shoulderDiff = abs(lSh.y - rSh.y)
     let hipDiff = abs(lHip.y - rHip.y)
 
@@ -56,19 +55,16 @@ func analyzePosture(
     let dy = midHipY - midShY
     let trunkAngle = abs(atan2(dx, dy) * 180 / .pi)
 
-    // Head tilt
     let headTilt = abs(nose.x - midShX)
 
-    // Spine deviation
     let spineDeviation = abs(midShX - midHipX)
 
-    // Arm hang asymmetry
     let leftArmLength = lSh.y - lWrist.y
     let rightArmLength = rSh.y - rWrist.y
     let armDiff = abs(leftArmLength - rightArmLength)
 
-    // Thresholds
-    let thresholds = ageThresholds[ageGroup] ?? ageThresholds["under15"]!
+    // FIX #8: safe fallback instead of force-unwrap
+    let thresholds = ageThresholds[ageGroup] ?? .default
 
     let shoulderStatus = shoulderDiff < thresholds.shoulderDiffPx ? "good" : "needs_improvement"
     let trunkStatus = trunkAngle < thresholds.trunkAngleDeg ? "good" : "needs_improvement"
