@@ -62,7 +62,7 @@ actor AnalysisService {
                 }
             } else if mode.contains("walking") {
                 if let gait = analyzeGait(landmarksFrames: [landmarks], imageSize: imageSize) {
-                    metrics.trunkLeanAngle = gait.gaitSymmetryScore
+                    metrics.spineDeviation = Double(gait.gaitSymmetryScore)
                 }
             }
 

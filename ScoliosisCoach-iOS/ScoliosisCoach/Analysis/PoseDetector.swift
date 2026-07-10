@@ -1,6 +1,5 @@
 import UIKit
 import MediaPipeTasksVision
-import CoreImage
 
 actor PoseDetector {
     static let shared = PoseDetector()

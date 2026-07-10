@@ -39,7 +39,7 @@ struct ResultsView: View {
                             maxScore: 100,
                             status: metrics.backAsymmetryStatus,
                             color: metrics.backAsymmetryRisk > 20 ? .orange : .green,
-                            description: "Pixel-level back asymmetry analysis"
+                            suffix: "%"
                         )
 
                         // Shoulder & Trunk

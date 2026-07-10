@@ -1,5 +1,4 @@
 import UIKit
-import PDFKit
 
 actor ReportService {
     static let shared = ReportService()

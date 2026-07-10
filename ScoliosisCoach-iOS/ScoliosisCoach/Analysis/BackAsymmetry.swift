@@ -136,7 +136,7 @@ func analyzeBackAsymmetry(
 
 // MARK: - Pixel Helpers
 
-private func averageBrightness(pixelData: Data, width: Int, height: Int, xStart: Int, xEnd: Int) -> CGFloat {
+func averageBrightness(pixelData: Data, width: Int, height: Int, xStart: Int, xEnd: Int) -> CGFloat {
     let bytesPerRow = width * 4
     var total: UInt64 = 0
     var count: UInt64 = 0

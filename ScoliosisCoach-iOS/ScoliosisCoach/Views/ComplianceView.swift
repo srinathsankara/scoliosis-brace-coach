@@ -82,7 +82,7 @@ struct ComplianceView: View {
     }
 
     private func toggleTracking() async {
-        if isTracking, let session = activeSession {
+        if isTracking, var session = activeSession {
             session.endTime = Date()
             let minutes = Int(Date().timeIntervalSince(session.startTime) / 60)
             session.wearMinutes = max(1, minutes)
