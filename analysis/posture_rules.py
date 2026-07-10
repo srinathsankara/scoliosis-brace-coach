@@ -1,4 +1,4 @@
-from .pose_detector import detector
+from .pose_detector import get_detector
 import numpy as np
 
 AGE_THRESHOLDS = {
@@ -13,13 +13,13 @@ def analyze_posture(landmarks, image_shape, age_group='under15'):
         return {}
     
     # Key landmarks
-    l_sh = detector.get_landmark_coords(landmarks, image_shape, 11)
-    r_sh = detector.get_landmark_coords(landmarks, image_shape, 12)
-    l_hip = detector.get_landmark_coords(landmarks, image_shape, 23)
-    r_hip = detector.get_landmark_coords(landmarks, image_shape, 24)
-    nose = detector.get_landmark_coords(landmarks, image_shape, 0)
-    l_ankle = detector.get_landmark_coords(landmarks, image_shape, 27)
-    r_ankle = detector.get_landmark_coords(landmarks, image_shape, 28)
+    l_sh = get_detector().get_landmark_coords(landmarks, image_shape, 11)
+    r_sh = get_detector().get_landmark_coords(landmarks, image_shape, 12)
+    l_hip = get_detector().get_landmark_coords(landmarks, image_shape, 23)
+    r_hip = get_detector().get_landmark_coords(landmarks, image_shape, 24)
+    nose = get_detector().get_landmark_coords(landmarks, image_shape, 0)
+    l_ankle = get_detector().get_landmark_coords(landmarks, image_shape, 27)
+    r_ankle = get_detector().get_landmark_coords(landmarks, image_shape, 28)
     
     # Midpoints
     mid_sh = [(l_sh[0] + r_sh[0])/2, (l_sh[1] + r_sh[1])/2]
@@ -39,8 +39,8 @@ def analyze_posture(landmarks, image_shape, age_group='under15'):
     spine_deviation = abs(mid_sh[0] - mid_hip[0])
     
     # Arm hang asymmetry
-    l_wrist = detector.get_landmark_coords(landmarks, image_shape, 15)
-    r_wrist = detector.get_landmark_coords(landmarks, image_shape, 16)
+    l_wrist = get_detector().get_landmark_coords(landmarks, image_shape, 15)
+    r_wrist = get_detector().get_landmark_coords(landmarks, image_shape, 16)
     arm_diff = abs((l_sh[1] - l_wrist[1]) - (r_sh[1] - r_wrist[1]))
     
     thresholds = AGE_THRESHOLDS.get(age_group, AGE_THRESHOLDS['under15'])

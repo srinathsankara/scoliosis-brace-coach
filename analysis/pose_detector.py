@@ -57,4 +57,10 @@ class PoseDetector:
         return [int(lm.x * w), int(lm.y * h)]
 
 
-detector = PoseDetector()
+_detector_instance = None
+
+def get_detector():
+    global _detector_instance
+    if _detector_instance is None:
+        _detector_instance = PoseDetector()
+    return _detector_instance

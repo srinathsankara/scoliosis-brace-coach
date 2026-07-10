@@ -1,4 +1,4 @@
-from .pose_detector import detector
+from .pose_detector import get_detector
 import numpy as np
 
 def analyze_gait(landmarks_list, image_shape):
@@ -12,8 +12,8 @@ def analyze_gait(landmarks_list, image_shape):
     # Using the last detected landmarks for a "snapshot" analysis
     landmarks = landmarks_list[-1]
     
-    left_hip = detector.get_landmark_coords(landmarks, image_shape, 23)
-    right_hip = detector.get_landmark_coords(landmarks, image_shape, 24)
+    left_hip = get_detector().get_landmark_coords(landmarks, image_shape, 23)
+    right_hip = get_detector().get_landmark_coords(landmarks, image_shape, 24)
     
     return {
         'pelvic_tilt': abs(left_hip[1] - right_hip[1]),

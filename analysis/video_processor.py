@@ -1,4 +1,4 @@
-from .pose_detector import detector
+from .pose_detector import get_detector
 from .brace_detector import detect_brace
 from .posture_rules import analyze_posture
 from .rotation_rules import analyze_rotation
@@ -34,7 +34,7 @@ def process_media(path, mode, age_group='under15'):
 
     image = frames[len(frames)//2]
     has_brace = detect_brace(image)
-    landmarks = detector.detect(image)
+    landmarks = get_detector().detect(image)
 
     if not landmarks:
         return {'status': 'error', 'message': 'No person detected'}
@@ -54,7 +54,7 @@ def process_media(path, mode, age_group='under15'):
         metrics.update(back_asym)
         analysis['metrics'] = metrics
     elif 'walking' in mode:
-        all_landmarks = [detector.detect(f) for f in frames if detector.detect(f)]
+        all_landmarks = [get_detector().detect(f) for f in frames if get_detector().detect(f)]
         gait_metrics = analyze_gait(all_landmarks, image.shape)
         if landmarks:
             rotation = analyze_rotation(landmarks, image.shape, age_group)

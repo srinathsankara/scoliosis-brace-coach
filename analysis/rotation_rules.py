@@ -1,5 +1,5 @@
 import numpy as np
-from .pose_detector import detector
+from .pose_detector import get_detector
 
 ROTATION_THRESHOLDS = {
     'under12': {'rib_hump': 5, 'axillary_diff': 4, 'rotation_angle': 3},
@@ -17,14 +17,14 @@ def analyze_rotation(landmarks, image_shape, age_group='under15'):
     if not landmarks:
         return {}
 
-    l_sh = detector.get_landmark_coords(landmarks, image_shape, 11)
-    r_sh = detector.get_landmark_coords(landmarks, image_shape, 12)
-    l_hip = detector.get_landmark_coords(landmarks, image_shape, 23)
-    r_hip = detector.get_landmark_coords(landmarks, image_shape, 24)
-    l_elbow = detector.get_landmark_coords(landmarks, image_shape, 13)
-    r_elbow = detector.get_landmark_coords(landmarks, image_shape, 14)
-    l_knee = detector.get_landmark_coords(landmarks, image_shape, 25)
-    r_knee = detector.get_landmark_coords(landmarks, image_shape, 26)
+    l_sh = get_detector().get_landmark_coords(landmarks, image_shape, 11)
+    r_sh = get_detector().get_landmark_coords(landmarks, image_shape, 12)
+    l_hip = get_detector().get_landmark_coords(landmarks, image_shape, 23)
+    r_hip = get_detector().get_landmark_coords(landmarks, image_shape, 24)
+    l_elbow = get_detector().get_landmark_coords(landmarks, image_shape, 13)
+    r_elbow = get_detector().get_landmark_coords(landmarks, image_shape, 14)
+    l_knee = get_detector().get_landmark_coords(landmarks, image_shape, 25)
+    r_knee = get_detector().get_landmark_coords(landmarks, image_shape, 26)
 
     # Rib hump estimation: asymmetry in shoulder-to-spine distance
     # In scoliosis, trunk rotation makes one shoulder blade more prominent

@@ -1,5 +1,3 @@
-from .pose_detector import detector
-
 def analyze_exercise(landmarks, image_shape):
     if not landmarks:
         return {}
