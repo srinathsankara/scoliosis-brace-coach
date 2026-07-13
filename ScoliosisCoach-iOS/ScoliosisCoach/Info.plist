@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Scoliosis Coach</string>
+	<string>ScolioTrack</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,18 +23,20 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Scoliosis Coach uses the camera to analyze posture and brace fit from photos. No images are uploaded — all processing is on-device.</string>
+	<string>	ScolioTrack uses the camera to analyze posture and brace fit from photos. No images are uploaded — all processing is on-device.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Scoliosis Coach accesses your photo library to select posture photos for analysis. All processing is on-device and private.</string>
+	<string>ScolioTrack accesses your photo library to select posture photos for analysis. All processing is on-device and private.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Scoliosis Coach uses Bluetooth to connect with compatible brace sensors (e.g., Boston Sensor, ScolioSense) for pressure and compliance monitoring.</string>
+	<string>ScolioTrack uses Bluetooth to connect with compatible brace sensors (e.g., Boston Sensor, ScolioSense) for pressure and compliance monitoring.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Scoliosis Coach uses Bluetooth to discover and connect with brace sensors.</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>ScolioTrack uses Bluetooth to discover and connect with brace sensors.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

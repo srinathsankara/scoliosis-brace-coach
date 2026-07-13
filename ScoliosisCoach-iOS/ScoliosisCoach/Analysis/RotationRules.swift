@@ -94,15 +94,15 @@ func analyzeRotation(
     }
 
     return RotationResult(
-        ribHumpProxy: ribHumpProxy.rounded(to: 2),
+        ribHumpProxy: ribHumpProxy.roundedTo(2),
         ribHumpStatus: ribHumpStatus,
-        axillaryFoldDiff: axillaryDiff.rounded(to: 2),
+        axillaryFoldDiff: axillaryDiff.roundedTo(2),
         axillaryStatus: axillaryStatus,
-        trunkRotationAngle: rotationAngle.rounded(to: 2),
+        trunkRotationAngle: rotationAngle.roundedTo(2),
         rotationStatus: rotationStatus,
-        trunkOffset: trunkOffset.rounded(to: 2),
-        scapularWingingDiff: scapDiff.rounded(to: 2),
-        pelvicObliquity: pelvicObliquity.rounded(to: 2),
-        rotationRiskScore: riskScore.rounded(to: 1)
+        trunkOffset: trunkOffset.roundedTo(2),
+        scapularWingingDiff: scapDiff.roundedTo(2),
+        pelvicObliquity: pelvicObliquity.roundedTo(2),
+        rotationRiskScore: riskScore.roundedTo(1)
     )
 }

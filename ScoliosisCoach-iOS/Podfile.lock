@@ -1,0 +1,26 @@
+PODS:
+  - GRDB.swift (6.24.1):
+    - GRDB.swift/standard (= 6.24.1)
+  - GRDB.swift/standard (6.24.1)
+  - MediaPipeTasksCommon (0.10.35)
+  - MediaPipeTasksVision (0.10.35):
+    - MediaPipeTasksCommon (= 0.10.35)
+
+DEPENDENCIES:
+  - GRDB.swift (~> 6.0)
+  - MediaPipeTasksVision (~> 0.10.0)
+
+SPEC REPOS:
+  trunk:
+    - GRDB.swift
+    - MediaPipeTasksCommon
+    - MediaPipeTasksVision
+
+SPEC CHECKSUMS:
+  GRDB.swift: 136dcb5d8dddca50aae3ba7d77475f79e7232cd8
+  MediaPipeTasksCommon: ae27d88c4d185db114a1a768c504f8270dda79b5
+  MediaPipeTasksVision: 1d6c3efa89830a131dbd0dc4fb80dea283fac521
+
+PODFILE CHECKSUM: cf99b81ea5ee37cff5aa7f2d32624373eaeaced5
+
+COCOAPODS: 1.17.0

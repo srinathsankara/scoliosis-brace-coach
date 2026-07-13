@@ -9,6 +9,10 @@ actor AnalysisService {
         mode: String = "standing_no_brace",
         ageGroup: String = "under15"
     ) async -> AnalysisResult {
+        if mode == "xray" {
+            return await analyzeXray(image: image, ageGroup: ageGroup)
+        }
+
         do {
             let landmarks = try await PoseDetector.shared.detect(image)
 
@@ -92,6 +96,53 @@ actor AnalysisService {
         } catch {
             return AnalysisResult(status: "error", message: "Analysis failed: \(error.localizedDescription)")
         }
+    }
+
+    private func analyzeXray(image: UIImage, ageGroup: String) async -> AnalysisResult {
+        let result = await XrayAnalyzer.shared.analyze(image)
+        let cobb = result.cobbAngle
+
+        guard cobb > 0 || result.confidence > 0.3 else {
+            return AnalysisResult(
+                status: "error",
+                message: "X-ray analysis: \(result.message). Ensure the image shows a clear full-spine X-ray."
+            )
+        }
+
+        var metrics = MetricsResult.empty()
+        metrics.spineDeviation = Double(cobb)
+        metrics.spineCurveScore = cobb
+        metrics.backAsymmetryRisk = min(cobb * 2.5, 100)
+        metrics.ribHumpProxy = cobb / 3
+        metrics.trunkLeanAngle = cobb * 0.6
+        if cobb > 25 {
+            metrics.backAsymmetryStatus = "Moderate-Severe"
+        } else if cobb > 10 {
+            metrics.backAsymmetryStatus = "Mild"
+        } else {
+            metrics.backAsymmetryStatus = "Normal"
+        }
+
+        let session = Session(
+            id: UUID().uuidString,
+            createdAt: Date(),
+            mode: "xray",
+            ageGroup: ageGroup,
+            braceDetected: false,
+            imagePath: nil,
+            metricsJSON: try! JSONEncoder().encode(metrics),
+            status: "success",
+            errorMessage: nil
+        )
+        try? await DatabaseService.shared.saveSession(session)
+
+        return AnalysisResult(
+            status: "success",
+            message: result.message,
+            mode: "xray",
+            metrics: metrics,
+            sessionID: session.id
+        )
     }
 }
 

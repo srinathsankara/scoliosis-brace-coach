@@ -32,10 +32,10 @@ func analyzeGait(landmarksFrames: [[[String: CGFloat]]], imageSize: CGSize) -> G
     let strideDiff = abs(leftStride - rightStride)
 
     return GaitResult(
-        pelvicTilt: pelvicTilt.rounded(to: 2),
-        stepAsymmetry: stepAsymmetry.rounded(to: 2),
-        strideLengthDiff: strideDiff.rounded(to: 2),
-        gaitSymmetryScore: max(0, 100 - (pelvicTilt + stepAsymmetry + strideDiff * 2).rounded(to: 1)),
+        pelvicTilt: pelvicTilt.roundedTo(2),
+        stepAsymmetry: stepAsymmetry.roundedTo(2),
+        strideLengthDiff: strideDiff.roundedTo(2),
+        gaitSymmetryScore: max(0, 100 - (pelvicTilt + stepAsymmetry + strideDiff * 2).roundedTo(1)),
         isVideoBased: isVideo
     )
 }

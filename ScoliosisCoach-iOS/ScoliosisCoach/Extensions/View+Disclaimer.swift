@@ -3,13 +3,19 @@ import SwiftUI
 struct DisclaimerModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .overlay(alignment: .bottom) {
-                Text("MEDICAL DISCLAIMER: For educational purposes only. Not a medical device. Consult a healthcare provider.")
-                    .font(.system(size: 9))
-                    .foregroundColor(.red)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 3)
-                    .background(Color(.systemBackground).opacity(0.9))
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                HStack(spacing: 6) {
+                    Image(systemName: "info.circle.fill")
+                        .font(.system(size: 8))
+                    Text("For educational monitoring only — not a medical device")
+                        .font(.system(size: 9, weight: .medium))
+                }
+                .foregroundColor(.white.opacity(0.9))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 6)
+                .padding(.horizontal, 12)
+                .background(.linearGradient(colors: [.accentTeal, .accentTealDark],
+                                            startPoint: .leading, endPoint: .trailing))
             }
     }
 }

@@ -70,20 +70,20 @@ func analyzePosture(
     let trunkStatus = trunkAngle < thresholds.trunkAngleDeg ? "good" : "needs_improvement"
 
     return PostureResult(
-        shoulderAsymmetry: shoulderDiff.rounded(to: 2),
-        hipAsymmetry: hipDiff.rounded(to: 2),
-        trunkLeanAngle: trunkAngle.rounded(to: 2),
-        headTilt: headTilt.rounded(to: 2),
-        spineDeviation: spineDeviation.rounded(to: 2),
-        armHangDiff: armDiff.rounded(to: 2),
+        shoulderAsymmetry: shoulderDiff.roundedTo(2),
+        hipAsymmetry: hipDiff.roundedTo(2),
+        trunkLeanAngle: trunkAngle.roundedTo(2),
+        headTilt: headTilt.roundedTo(2),
+        spineDeviation: spineDeviation.roundedTo(2),
+        armHangDiff: armDiff.roundedTo(2),
         shoulderStatus: shoulderStatus,
         trunkStatus: trunkStatus
     )
 }
 
-extension CGFloat {
-    func rounded(to places: Int) -> CGFloat {
-        let divisor = pow(10.0, CGFloat(places))
+extension BinaryFloatingPoint {
+    func roundedTo(_ places: Int) -> Self {
+        let divisor = Self(pow(10.0, Double(places)))
         return (self * divisor).rounded() / divisor
     }
 }

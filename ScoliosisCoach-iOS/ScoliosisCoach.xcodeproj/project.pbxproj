@@ -1,0 +1,530 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0AD4903AECC4AFB0417A9AFB /* PoseDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3FA80054F1B523A6064EB /* PoseDetector.swift */; };
+		18BDEFE22B103E9E2DD1AE2E /* ExerciseRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967D3FF376B80D430749D83A /* ExerciseRules.swift */; };
+		1CF9D163C1359BE71870FB47 /* GaitRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD6DFD6187F865865A59D2A /* GaitRules.swift */; };
+		25CCDDBE37174BC12FF2C494 /* BLEService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D51BCAE8F448AEB602C3AF1 /* BLEService.swift */; };
+		2C4B8DB4F91213D640BCE829 /* PostureRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7D58B4D316D7DD49A3394 /* PostureRules.swift */; };
+		36822597CCDE4050734D67FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FEB80A7931D0368672C8E1 /* ContentView.swift */; };
+		3C9298B2D8CC2CE4A17EE18A /* AnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAD30319F2C75FCFECBBA2A /* AnalysisService.swift */; };
+		3D3DD437F4CE51262532179E /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192718198A866191A07EA6BE /* TrendsView.swift */; };
+		594463DCED5F5F166D3C83C7 /* ScoliosisCoachApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A95CE35999BF8CA0D96351 /* ScoliosisCoachApp.swift */; };
+		605B5C936C7811DB17F6429B /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590A002BFAD5D827F7D997DC /* ResultsView.swift */; };
+		794F57FDF141CA8BBC506BE8 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF40889FB0B76240EECE9A6 /* ReportView.swift */; };
+		7A423AA41BDC8913856840E3 /* ComplianceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5F231BEE6717EEE69983AF /* ComplianceView.swift */; };
+		81164C5120A56DC61AE74E7D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A5F878A50957D17A83F5EC /* HistoryView.swift */; };
+		95CED3A26393F970D7F20349 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE830F14E23A80D96471ED97 /* SettingsView.swift */; };
+		95EB3CC7150CA0C19650E59F /* AnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1AB8B45A2C18A0EF220628 /* AnalysisView.swift */; };
+		9707859D1B4DB9FFCB83B099 /* View+Disclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8180B954785E281C9D34FA98 /* View+Disclaimer.swift */; };
+		9A81C729267C46395F12FA57 /* ReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D925DF2CC2943C249EB8CB /* ReportService.swift */; };
+		9E9411DA04D44DAE48D9A0A5 /* BraceDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799EF45F227A4AC9699AE7BC /* BraceDetector.swift */; };
+		A200A24FC4D2973A363D568E /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461D0353C6C2CE5EAE3BCFF2 /* DatabaseService.swift */; };
+		AC3C7DE7E82C28A59D864889 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5C4CA53322021969395AA56 /* Assets.xcassets */; };
+		B4A630D61C765069C35CB21B /* Compliance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E097EDA3A7B5F1B15AF01E /* Compliance.swift */; };
+		BC0F5CF267B2C7FECCBF25EC /* RotationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318B17C09BD10938B710E22C /* RotationRules.swift */; };
+		C16DDE3F88826B52177896EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D3B295640EBA2E9E0B18F6 /* Foundation.framework */; };
+		E6DC65DB0F8A9B9FA4A688B0 /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587EEF26ADAF91ABCE885B55 /* Color+Theme.swift */; };
+		EEE06A941928D0B47357F60A /* BackAsymmetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15F6D3BEF9E23C885CADC10 /* BackAsymmetry.swift */; };
+		FE93BC4BA21EF27DF26987B8 /* Pods_ScoliosisCoach.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2758AFFA720ADEBBD453601D /* Pods_ScoliosisCoach.framework */; };
+		FF1D5F56A5239ED7D2DEC173 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59295C46A25E2A59B091EFAE /* Session.swift */; };
+		176738A9610E7D57ED0047B2 /* pose_landmarker.task in Resources */ = {isa = PBXBuildFile; fileRef = 6B715118CF5861304586D7A0 /* pose_landmarker.task */; };
+		B8A2F1C3D4E5F6A7B8C9D0E1 /* debug_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* debug_test.jpg */; };
+		X2Y3Z4A5B6C7D8E9F0G1H2I3 /* XrayAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = X1Y2Z3A4B5C6D7E8F9G0H1I2 /* XrayAnalyzer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		07562673507A0F6258ED05B3 /* Pods-ScoliosisCoach.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoliosisCoach.release.xcconfig"; path = "Target Support Files/Pods-ScoliosisCoach/Pods-ScoliosisCoach.release.xcconfig"; sourceTree = "<group>"; };
+		0D51BCAE8F448AEB602C3AF1 /* BLEService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BLEService.swift; path = ScoliosisCoach/Services/BLEService.swift; sourceTree = "<group>"; };
+		139291D98150A06229B17535 /* Pods-ScoliosisCoach.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScoliosisCoach.debug.xcconfig"; path = "Target Support Files/Pods-ScoliosisCoach/Pods-ScoliosisCoach.debug.xcconfig"; sourceTree = "<group>"; };
+		192718198A866191A07EA6BE /* TrendsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrendsView.swift; path = ScoliosisCoach/Views/TrendsView.swift; sourceTree = "<group>"; };
+		1F5F231BEE6717EEE69983AF /* ComplianceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ComplianceView.swift; path = ScoliosisCoach/Views/ComplianceView.swift; sourceTree = "<group>"; };
+		2758AFFA720ADEBBD453601D /* Pods_ScoliosisCoach.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScoliosisCoach.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		28D3B295640EBA2E9E0B18F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		30E7D58B4D316D7DD49A3394 /* PostureRules.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PostureRules.swift; path = ScoliosisCoach/Analysis/PostureRules.swift; sourceTree = "<group>"; };
+		318B17C09BD10938B710E22C /* RotationRules.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RotationRules.swift; path = ScoliosisCoach/Analysis/RotationRules.swift; sourceTree = "<group>"; };
+		3A1AB8B45A2C18A0EF220628 /* AnalysisView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnalysisView.swift; path = ScoliosisCoach/Views/AnalysisView.swift; sourceTree = "<group>"; };
+		43A95CE35999BF8CA0D96351 /* ScoliosisCoachApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScoliosisCoachApp.swift; path = ScoliosisCoach/ScoliosisCoachApp.swift; sourceTree = "<group>"; };
+		461D0353C6C2CE5EAE3BCFF2 /* DatabaseService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatabaseService.swift; path = ScoliosisCoach/Services/DatabaseService.swift; sourceTree = "<group>"; };
+		53D925DF2CC2943C249EB8CB /* ReportService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReportService.swift; path = ScoliosisCoach/Services/ReportService.swift; sourceTree = "<group>"; };
+		587EEF26ADAF91ABCE885B55 /* Color+Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Color+Theme.swift"; path = "ScoliosisCoach/Extensions/Color+Theme.swift"; sourceTree = "<group>"; };
+		590A002BFAD5D827F7D997DC /* ResultsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResultsView.swift; path = ScoliosisCoach/Views/ResultsView.swift; sourceTree = "<group>"; };
+		59295C46A25E2A59B091EFAE /* Session.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Session.swift; path = ScoliosisCoach/Models/Session.swift; sourceTree = "<group>"; };
+		799EF45F227A4AC9699AE7BC /* BraceDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BraceDetector.swift; path = ScoliosisCoach/Analysis/BraceDetector.swift; sourceTree = "<group>"; };
+		7CAD30319F2C75FCFECBBA2A /* AnalysisService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnalysisService.swift; path = ScoliosisCoach/Services/AnalysisService.swift; sourceTree = "<group>"; };
+		8180B954785E281C9D34FA98 /* View+Disclaimer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "View+Disclaimer.swift"; path = "ScoliosisCoach/Extensions/View+Disclaimer.swift"; sourceTree = "<group>"; };
+		967D3FF376B80D430749D83A /* ExerciseRules.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExerciseRules.swift; path = ScoliosisCoach/Analysis/ExerciseRules.swift; sourceTree = "<group>"; };
+		A5C4CA53322021969395AA56 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ScoliosisCoach/Assets.xcassets; sourceTree = "<group>"; };
+		AFF40889FB0B76240EECE9A6 /* ReportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReportView.swift; path = ScoliosisCoach/Views/ReportView.swift; sourceTree = "<group>"; };
+		B2E097EDA3A7B5F1B15AF01E /* Compliance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Compliance.swift; path = ScoliosisCoach/Models/Compliance.swift; sourceTree = "<group>"; };
+		CEE3FA80054F1B523A6064EB /* PoseDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PoseDetector.swift; path = ScoliosisCoach/Analysis/PoseDetector.swift; sourceTree = "<group>"; };
+		D0280BC1D6072D3B64090F37 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = ScoliosisCoach/Info.plist; sourceTree = "<group>"; };
+		D8A5F878A50957D17A83F5EC /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = ScoliosisCoach/Views/HistoryView.swift; sourceTree = "<group>"; };
+		DBD6DFD6187F865865A59D2A /* GaitRules.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GaitRules.swift; path = ScoliosisCoach/Analysis/GaitRules.swift; sourceTree = "<group>"; };
+		DE830F14E23A80D96471ED97 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = ScoliosisCoach/Views/SettingsView.swift; sourceTree = "<group>"; };
+		F15F6D3BEF9E23C885CADC10 /* BackAsymmetry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BackAsymmetry.swift; path = ScoliosisCoach/Analysis/BackAsymmetry.swift; sourceTree = "<group>"; };
+		X1Y2Z3A4B5C6D7E8F9G0H1I2 /* XrayAnalyzer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = XrayAnalyzer.swift; path = ScoliosisCoach/Analysis/XrayAnalyzer.swift; sourceTree = "<group>"; };
+		F836BF69B97F9022493E58D5 /* ScoliosisCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoliosisCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8FEB80A7931D0368672C8E1 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = ScoliosisCoach/Views/ContentView.swift; sourceTree = "<group>"; };
+		6B715118CF5861304586D7A0 /* pose_landmarker.task */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = pose_landmarker.task; path = ScoliosisCoach/pose_landmarker.task; sourceTree = "<group>"; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* debug_test.jpg */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.jpeg; name = debug_test.jpg; path = ScoliosisCoach/debug_test.jpg; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D308A5A3D543C1249D36A6D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C16DDE3F88826B52177896EE /* Foundation.framework in Frameworks */,
+				FE93BC4BA21EF27DF26987B8 /* Pods_ScoliosisCoach.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		227030372137BFE786AD1667 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				07562673507A0F6258ED05B3 /* Pods-ScoliosisCoach.release.xcconfig */,
+				139291D98150A06229B17535 /* Pods-ScoliosisCoach.debug.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		2A112C4C9C751F661766D501 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EE98B89D30C2E909B59AD817 /* iOS */,
+				2758AFFA720ADEBBD453601D /* Pods_ScoliosisCoach.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3898A9B2EE92DB596A943326 = {
+			isa = PBXGroup;
+			children = (
+				629957823F574DC16D65ADC5 /* Products */,
+				2A112C4C9C751F661766D501 /* Frameworks */,
+				AA9CC04540A96D6417D53A00 /* Analysis */,
+				76134834F977F0CD8B4762C0 /* Models */,
+				E185166F7AACEF5A3C624C98 /* Views */,
+				F6390A227C7CE41B0296C293 /* Services */,
+				929D81BE87088720A6690931 /* Extensions */,
+				43A95CE35999BF8CA0D96351 /* ScoliosisCoachApp.swift */,
+				D0280BC1D6072D3B64090F37 /* Info.plist */,
+				A5C4CA53322021969395AA56 /* Assets.xcassets */,
+				6B715118CF5861304586D7A0 /* pose_landmarker.task */,
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* debug_test.jpg */,
+				227030372137BFE786AD1667 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		629957823F574DC16D65ADC5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F836BF69B97F9022493E58D5 /* ScoliosisCoach.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		76134834F977F0CD8B4762C0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59295C46A25E2A59B091EFAE /* Session.swift */,
+				B2E097EDA3A7B5F1B15AF01E /* Compliance.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		929D81BE87088720A6690931 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8180B954785E281C9D34FA98 /* View+Disclaimer.swift */,
+				587EEF26ADAF91ABCE885B55 /* Color+Theme.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		AA9CC04540A96D6417D53A00 /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				CEE3FA80054F1B523A6064EB /* PoseDetector.swift */,
+				967D3FF376B80D430749D83A /* ExerciseRules.swift */,
+				318B17C09BD10938B710E22C /* RotationRules.swift */,
+				799EF45F227A4AC9699AE7BC /* BraceDetector.swift */,
+				DBD6DFD6187F865865A59D2A /* GaitRules.swift */,
+				30E7D58B4D316D7DD49A3394 /* PostureRules.swift */,
+				F15F6D3BEF9E23C885CADC10 /* BackAsymmetry.swift */,
+				X1Y2Z3A4B5C6D7E8F9G0H1I2 /* XrayAnalyzer.swift */,
+			);
+			name = Analysis;
+
+			sourceTree = "<group>";
+		};
+		E185166F7AACEF5A3C624C98 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A1AB8B45A2C18A0EF220628 /* AnalysisView.swift */,
+				DE830F14E23A80D96471ED97 /* SettingsView.swift */,
+				1F5F231BEE6717EEE69983AF /* ComplianceView.swift */,
+				590A002BFAD5D827F7D997DC /* ResultsView.swift */,
+				AFF40889FB0B76240EECE9A6 /* ReportView.swift */,
+				D8A5F878A50957D17A83F5EC /* HistoryView.swift */,
+				192718198A866191A07EA6BE /* TrendsView.swift */,
+				F8FEB80A7931D0368672C8E1 /* ContentView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		EE98B89D30C2E909B59AD817 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				28D3B295640EBA2E9E0B18F6 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		F6390A227C7CE41B0296C293 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0D51BCAE8F448AEB602C3AF1 /* BLEService.swift */,
+				53D925DF2CC2943C249EB8CB /* ReportService.swift */,
+				7CAD30319F2C75FCFECBBA2A /* AnalysisService.swift */,
+				461D0353C6C2CE5EAE3BCFF2 /* DatabaseService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		27BAB0EE135623292C725155 /* ScoliosisCoach */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A57C26FC291868169D293B1 /* Build configuration list for PBXNativeTarget "ScoliosisCoach" */;
+			buildPhases = (
+				5A94F0842386D6AEBD2702E3 /* [CP] Check Pods Manifest.lock */,
+				6BEA6080736B8765DC3EF69B /* Sources */,
+				D308A5A3D543C1249D36A6D8 /* Frameworks */,
+				E14CA6CE375591D526623E47 /* Resources */,
+				7CC49847C3C002C0F267BB30 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScoliosisCoach;
+			productName = ScoliosisCoach;
+			productReference = F836BF69B97F9022493E58D5 /* ScoliosisCoach.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D2FE901C30AA7F9E6074A9DF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 1E427972B91FF675401ACCA0 /* Build configuration list for PBXProject "ScoliosisCoach" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3898A9B2EE92DB596A943326;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 100;
+			productRefGroup = 629957823F574DC16D65ADC5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				27BAB0EE135623292C725155 /* ScoliosisCoach */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E14CA6CE375591D526623E47 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC3C7DE7E82C28A59D864889 /* Assets.xcassets in Resources */,
+				176738A9610E7D57ED0047B2 /* pose_landmarker.task in Resources */,
+				B8A2F1C3D4E5F6A7B8C9D0E1 /* debug_test.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5A94F0842386D6AEBD2702E3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ScoliosisCoach-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7CC49847C3C002C0F267BB30 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ScoliosisCoach/Pods-ScoliosisCoach-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRDB.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ScoliosisCoach/Pods-ScoliosisCoach-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6BEA6080736B8765DC3EF69B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AD4903AECC4AFB0417A9AFB /* PoseDetector.swift in Sources */,
+				18BDEFE22B103E9E2DD1AE2E /* ExerciseRules.swift in Sources */,
+				BC0F5CF267B2C7FECCBF25EC /* RotationRules.swift in Sources */,
+				9E9411DA04D44DAE48D9A0A5 /* BraceDetector.swift in Sources */,
+				1CF9D163C1359BE71870FB47 /* GaitRules.swift in Sources */,
+				2C4B8DB4F91213D640BCE829 /* PostureRules.swift in Sources */,
+				EEE06A941928D0B47357F60A /* BackAsymmetry.swift in Sources */,
+				X2Y3Z4A5B6C7D8E9F0G1H2I3 /* XrayAnalyzer.swift in Sources */,
+				FF1D5F56A5239ED7D2DEC173 /* Session.swift in Sources */,
+				B4A630D61C765069C35CB21B /* Compliance.swift in Sources */,
+				9707859D1B4DB9FFCB83B099 /* View+Disclaimer.swift in Sources */,
+				E6DC65DB0F8A9B9FA4A688B0 /* Color+Theme.swift in Sources */,
+				594463DCED5F5F166D3C83C7 /* ScoliosisCoachApp.swift in Sources */,
+				95EB3CC7150CA0C19650E59F /* AnalysisView.swift in Sources */,
+				95CED3A26393F970D7F20349 /* SettingsView.swift in Sources */,
+				7A423AA41BDC8913856840E3 /* ComplianceView.swift in Sources */,
+				605B5C936C7811DB17F6429B /* ResultsView.swift in Sources */,
+				794F57FDF141CA8BBC506BE8 /* ReportView.swift in Sources */,
+				81164C5120A56DC61AE74E7D /* HistoryView.swift in Sources */,
+				3D3DD437F4CE51262532179E /* TrendsView.swift in Sources */,
+				36822597CCDE4050734D67FF /* ContentView.swift in Sources */,
+				25CCDDBE37174BC12FF2C494 /* BLEService.swift in Sources */,
+				9A81C729267C46395F12FA57 /* ReportService.swift in Sources */,
+				3C9298B2D8CC2CE4A17EE18A /* AnalysisService.swift in Sources */,
+				A200A24FC4D2973A363D568E /* DatabaseService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		08AD036ED28F3FE8BFF0C44D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		307ACAA7DC2D298AC6BB146C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 139291D98150A06229B17535 /* Pods-ScoliosisCoach.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XVF349N77X;
+				INFOPLIST_FILE = ScoliosisCoach/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.srinathsankara.scoliotrack;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		8A996B92D831EDE43BA62046 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 07562673507A0F6258ED05B3 /* Pods-ScoliosisCoach.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ScoliosisCoach/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.srinathsankara.scoliotrack;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E87E5272CD6A4F8BEA038EFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1E427972B91FF675401ACCA0 /* Build configuration list for PBXProject "ScoliosisCoach" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E87E5272CD6A4F8BEA038EFC /* Debug */,
+				08AD036ED28F3FE8BFF0C44D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A57C26FC291868169D293B1 /* Build configuration list for PBXNativeTarget "ScoliosisCoach" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A996B92D831EDE43BA62046 /* Release */,
+				307ACAA7DC2D298AC6BB146C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D2FE901C30AA7F9E6074A9DF /* Project object */;
+}

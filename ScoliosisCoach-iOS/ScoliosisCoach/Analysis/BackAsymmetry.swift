@@ -25,13 +25,10 @@ func analyzeBackAsymmetry(
     let scale = min(analysisMaxDim / image.size.width, analysisMaxDim / image.size.height, 1.0)
     let scaledSize = CGSize(width: image.size.width * scale, height: image.size.height * scale)
 
-    UIGraphicsBeginImageContextWithOptions(scaledSize, true, 1.0)
-    image.draw(in: CGRect(origin: .zero, size: scaledSize))
-    guard let scaledCG = UIGraphicsGetImageFromCurrentImageContext()?.cgImage else {
-        UIGraphicsEndImageContext()
-        return nil
-    }
-    UIGraphicsEndImageContext()
+    let renderer = UIGraphicsImageRenderer(size: scaledSize)
+    guard let scaledCG = renderer.image { _ in
+        image.draw(in: CGRect(origin: .zero, size: scaledSize))
+    }.cgImage else { return nil }
 
     // Scale landmarks to downscaled coordinates
     func lm(_ idx: Int) -> CGPoint {
@@ -124,12 +121,12 @@ func analyzeBackAsymmetry(
     let status = clampedRisk > 20 ? "needs_improvement" : "good"
 
     return BackAsymmetryResult(
-        brightnessAsymmetry: brightnessAsymmetry.rounded(to: 2),
-        midlineDeviation: midlineDeviation.rounded(to: 2),
-        textureAsymmetry: textureAsymmetry.rounded(to: 2),
-        edgeAsymmetry: edgeAsymmetry.rounded(to: 2),
-        spineCurveScore: spineCurveScore.rounded(to: 2),
-        backAsymmetryRisk: clampedRisk.rounded(to: 1),
+        brightnessAsymmetry: brightnessAsymmetry.roundedTo( 2),
+        midlineDeviation: midlineDeviation.roundedTo( 2),
+        textureAsymmetry: textureAsymmetry.roundedTo( 2),
+        edgeAsymmetry: edgeAsymmetry.roundedTo( 2),
+        spineCurveScore: spineCurveScore.roundedTo( 2),
+        backAsymmetryRisk: clampedRisk.roundedTo( 1),
         backAsymmetryStatus: status
     )
 }

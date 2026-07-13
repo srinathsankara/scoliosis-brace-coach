@@ -7,37 +7,110 @@ struct ReportView: View {
     @State private var showShare = false
 
     var body: some View {
-        VStack(spacing: 16) {
-            if isLoading {
-                ProgressView("Generating Report...")
-            } else if pdfData != nil {
-                Image(systemName: "doc.pdf.fill")
-                    .font(.system(size: 64))
-                    .foregroundColor(.accentColor)
-                Text("PDF Report Ready")
-                    .font(.title2).bold()
-                Button("Share Report") {
-                    showShare = true
+        ScrollView {
+            VStack(spacing: 24) {
+                if isLoading {
+                    ProgressView()
+                        .scaleEffect(1.5)
+                        .tint(.accentTeal)
+                    Text("Generating Report...")
+                        .font(AppFont.headline())
+                        .foregroundColor(.textSecondary)
+                } else if pdfData != nil {
+                    successState
+                } else {
+                    initialState
                 }
-                .buttonStyle(.borderedProminent)
-            } else {
-                Image(systemName: "doc.text")
-                    .font(.system(size: 48))
-                    .foregroundColor(.secondary)
-                Text("Generate a PDF report from your analysis results")
-                    .foregroundColor(.secondary)
-                Button("Generate") {
-                    Task { await generateReport() }
-                }
-                .buttonStyle(.borderedProminent)
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 60)
         }
-        .padding()
+        .background(Color.backgroundPrimary.ignoresSafeArea())
         .navigationTitle("Report")
         .sheet(isPresented: $showShare) {
             if let data = pdfData {
                 ShareSheet(activityItems: [data])
             }
+        }
+    }
+
+    private var successState: some View {
+        VStack(spacing: 24) {
+            ZStack {
+                Circle()
+                    .fill(Color.statusGoodLight)
+                    .frame(width: 88, height: 88)
+                Image(systemName: "doc.pdf.fill")
+                    .font(.system(size: 36))
+                    .foregroundColor(.statusGood)
+            }
+
+            Text("PDF Ready")
+                .font(AppFont.title(26))
+
+            Text("Your report is ready to share with your healthcare provider")
+                .font(.subheadline)
+                .foregroundColor(.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+
+            Button {
+                showShare = true
+            } label: {
+                Label("Share Report", systemImage: "square.and.arrow.up")
+                    .font(.headline.weight(.semibold))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.accentTeal)
+                    .foregroundColor(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .shadow(color: .accentTeal.opacity(0.3), radius: 8, x: 0, y: 4)
+            }
+            .padding(.horizontal, 40)
+
+            Button(role: .destructive) {
+                pdfData = nil
+            } label: {
+                Text("Regenerate")
+                    .font(.subheadline.weight(.medium))
+                    .foregroundColor(.textSecondary)
+            }
+        }
+    }
+
+    private var initialState: some View {
+        VStack(spacing: 24) {
+            ZStack {
+                Circle()
+                    .fill(Color.accentTealLight)
+                    .frame(width: 88, height: 88)
+                Image(systemName: "doc.text")
+                    .font(.system(size: 36))
+                    .foregroundColor(.accentTeal)
+            }
+
+            Text("Analysis Report")
+                .font(AppFont.title(26))
+
+            Text("Generate a detailed PDF report from your posture analysis results to share with your clinician")
+                .font(.subheadline)
+                .foregroundColor(.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+
+            Button {
+                Task { await generateReport() }
+            } label: {
+                Label("Generate Report", systemImage: "doc.badge.plus")
+                    .font(.headline.weight(.semibold))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(Color.accentTeal)
+                    .foregroundColor(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                    .shadow(color: .accentTeal.opacity(0.3), radius: 8, x: 0, y: 4)
+            }
+            .padding(.horizontal, 40)
         }
     }
 
